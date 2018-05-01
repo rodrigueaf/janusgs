@@ -1,0 +1,281 @@
+<!-- entête titre et file d'arial -->
+<div class="card-heading" style="padding: 2px 2px ">
+    <h2>Journal</h2>
+</div>
+
+<!-- Corps liste  -->
+<div class="card-body no-padding-v">
+    <section class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-inline" role="form" ng-submit="doSearch()">
+
+                        <div class="form-group">
+                            <input
+                                    type="text" ng-model="filterForm.journal.description"
+                                    class="form-control" id="description"
+                                    placeholder="Description">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" id="btn-search"
+                                    class="btn btn-primary">
+                                <span class="fa fa-search"></span> Rechercher
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <a ng-click="addPrevision()"
+                               id="btn-add" class="btn btn-success">
+                                <span class="mdi-content-add-box i-20"></span> Ajouter une ligne
+                            </a>
+                        </div>
+
+                        <div class="form-group">
+                            <a md-ink-ripple id="btn-refresh"
+                               class="btn btn-primary" ng-click="refresh()">
+                                <span class="mdi-navigation-refresh i-20"></span> Rafraichir
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <md-table-pagination md-limit="query.limit"
+                                         md-on-paginate="getAll"
+                                         md-limit-options="query.limitOption" md-page="query.page"
+                                         md-boundary-links="true" md-total="{{query.count}}"
+                                         md-label="{{query.label}}" md-page-select></md-table-pagination>
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover table-condensed">
+                <tr style="font-weight: bold">
+                    <td style="text-align: center;">Actions</td>
+                    <td style="text-align: center;">Prévision</td>
+                    <td style="text-align: center;">Date début</td>
+                    <td style="text-align: center;">Date fin</td>
+                    <td style="text-align: center;">Elément</td>
+                    <td style="text-align: center;">Durée</td>
+                    <td style="text-align: center;">Domaine</td>
+                    <td style="text-align: center;">Type</td>
+                    <td style="text-align: center;">Catégorie</td>
+                    <td style="text-align: center;">Projet</td>
+                    <td style="text-align: center;">Processus</td>
+                    <td style="text-align: center;">Observation</td>
+                    <td style="text-align: center;">Recommandation</td>
+                </tr>
+                <tr ng-repeat="p in journaux | orderBy : '-identifiant'">
+                    <td>
+                        <!-- form -->
+                        <form editable-form name="rowform" onbeforesave="savePrevision($data, p.identifiant)"
+                              ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == p">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
+                                <span class="fa fa-check-circle"></span> Valider
+                            </button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                                    class="btn btn-default">
+                                Annuler
+                            </button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="removePrevision($index, $event, p.identifiant)">
+                                <span class="fa fa-remove"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" ng-click="rowform.$show()">
+                                <span class="mdi-editor-mode-edit i-20"></span>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div editable-ui-select="p.prevision" data-e-form="rowform"
+                             e-ng-change="loadJournal($data, p)"
+                             data-e-name="prevision" name="prevision"
+                             theme="bootstrap" data-e-ng-model="p.prevision"
+                             data-e-style="min-width:100px;">
+                            {{getReduceDescription(p.prevision.description, 20) || 'Vide'}}
+                            <editable-ui-select-match placeholder="Prévision">
+                                {{$select.selected.description}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices
+                                    refresh="fetch($select)"
+                                    refresh-delay="300"
+                                    repeat="prevision as prevision in previsions | filter: $select.search">
+                                <div ng-bind-html="prevision.description | highlight: $select.search"></div>
+                                <div ng-show="($index == $select.items.length - 1) && !endOfList">
+                                    <button class="btn btn-xs btn-default"
+                                            style="width: 100%; margin-top: 5px;"
+                                            ng-mouseover="fetch($select, $event)"
+                                            ng-disabled="loading">afficher plus...
+                                    </button>
+                                </div>
+                            </editable-ui-select-choices>
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="#" editable-combodate="p.heureDebutRealisation"
+                           data-e-name="heureDebutRealisation"
+                           id="heureDebutRealisation"
+                           e-min-year="2016" e-max-year="2025"
+                           e-format="MM-DD-YYYY HH:mm" e-template="DD MM YYYY HH:mm"
+                           e-smartDays="true"
+                           data-e-form="rowform">
+                            {{ (p.heureDebutRealisation | date:"dd/MM/yyyy HH:mm") || 'Vide' }}
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="#" editable-combodate="p.heureFinRealisation"
+                           data-e-name="heureFinRealisation"
+                           id="heureFinRealisation"
+                           e-min-year="2016" e-max-year="2025"
+                           e-format="MM-DD-YYYY HH:mm" e-template="D MM YYYY HH:mm"
+                           e-smartDays="true"
+                           data-e-form="rowform">
+                            {{ (p.heureFinRealisation | date:"dd/MM/yyyy HH:mm") || 'Vide' }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" editable-textarea="p.description" e-name="description" e-form="rowform"
+                           e-rows="5" e-cols="40"
+                           data-e-style="min-width:300px;">
+                            <pre>{{ getReduceDescription(p.description) || 'Vide' }}</pre>
+                        </a>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div editable-ui-select="p.domaine"
+                             e-id="domaine"
+                             data-e-form="rowform" data-e-name="domaine" name="domaine"
+                             data-e-ng-model="p.domaine">
+                            {{ p.domaine.libelle}}
+                            <editable-ui-select-match placeholder="Sélectionner le domaine...">
+                                {{$select.selected.libelle}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices
+                                    refresh="fetchDomaine($select)"
+                                    refresh-delay="300"
+                                    repeat="domaine as domaine in domaines | filter: $select.search">
+                                <div ng-bind-html="domaine.libelle | highlight: $select.search"></div>
+                                <div ng-show="($index == $select.items.length - 1) && !endOfList">
+                                    <button class="btn btn-xs btn-default"
+                                            style="width: 100%; margin-top: 5px;"
+                                            ng-mouseover="fetchDomaine($select, $event)"
+                                            ng-disabled="loading">afficher plus...
+                                    </button>
+                                </div>
+                            </editable-ui-select-choices>
+                        </div>
+                    </td>
+                    <td>
+                        <div editable-ui-select="p.typeItem" data-e-form="rowform"
+                             data-e-name="typeItem" name="typeItem" theme="bootstrap" data-e-ng-model="p.typeItem"
+                             data-e-style="min-width:100px;">
+                            {{p.typeItem| translate}}
+                            <editable-ui-select-match placeholder="Type">
+                                {{$select.selected| translate}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices repeat="type in types | filter: $select.search track by $index">
+                                {{type | translate}}
+                            </editable-ui-select-choices>
+                        </div>
+                    </td>
+                    <td>
+                        <div editable-ui-select="p.categorie"
+                             e-id="categorie"
+                             data-e-form="rowform" data-e-name="categorie" name="categorie"
+                             data-e-ng-model="p.categorie">
+                            {{ p.categorie.libelle}}
+                            <editable-ui-select-match placeholder="Sélectionner la categorie...">
+                                {{$select.selected.libelle}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices
+                                    refresh="fetchCategorie($select)"
+                                    refresh-delay="300"
+                                    repeat="categorie as categorie in categories | filter: $select.search">
+                                <div ng-bind-html="categorie.libelle | highlight: $select.search"></div>
+                                <div ng-show="($index == $select.items.length - 1) && !endOfList">
+                                    <button class="btn btn-xs btn-default"
+                                            style="width: 100%; margin-top: 5px;"
+                                            ng-mouseover="fetchCategorie($select, $event)"
+                                            ng-disabled="loading">afficher plus...
+                                    </button>
+                                </div>
+                            </editable-ui-select-choices>
+                        </div>
+                    <td>
+                        <div editable-ui-select="p.projet"
+                             e-id="projet"
+                             data-e-form="rowform" data-e-name="projet" name="projet"
+                             data-e-ng-model="p.projet">
+                            {{ p.projet.libelle}}
+                            <editable-ui-select-match placeholder="Sélectionner le projet...">
+                                {{$select.selected.libelle}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices
+                                    refresh="fetchProjet($select)"
+                                    refresh-delay="300"
+                                    repeat="projet as projet in projets | filter: $select.search">
+                                <div ng-bind-html="projet.libelle | highlight: $select.search"></div>
+                                <div ng-show="($index == $select.items.length - 1) && !endOfList">
+                                    <button class="btn btn-xs btn-default"
+                                            style="width: 100%; margin-top: 5px;"
+                                            ng-mouseover="fetchProjet($select, $event)"
+                                            ng-disabled="loading">afficher plus...
+                                    </button>
+                                </div>
+                            </editable-ui-select-choices>
+                        </div>
+                    </td>
+                    <td>
+                        <div editable-ui-select="p.processus"
+                             e-id="processus"
+                             data-e-form="rowform" data-e-name="processus" name="processus"
+                             data-e-ng-model="p.processus">
+                            {{ p.processus.libelle}}
+                            <editable-ui-select-match placeholder="Sélectionner le processus...">
+                                {{$select.selected.libelle}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices
+                                    refresh="fetchProcessus($select)"
+                                    refresh-delay="300"
+                                    repeat="processus as processus in processuss | filter: $select.search">
+                                <div ng-bind-html="processus.libelle | highlight: $select.search"></div>
+                                <div ng-show="($index == $select.items.length - 1) && !endOfList">
+                                    <button class="btn btn-xs btn-default"
+                                            style="width: 100%; margin-top: 5px;"
+                                            ng-mouseover="fetchProcessus($select, $event)"
+                                            ng-disabled="loading">afficher plus...
+                                    </button>
+                                </div>
+                            </editable-ui-select-choices>
+                        </div>
+                    </td>
+                    <td>
+                        <span editable-text="p.observation" e-name="observation" e-form="rowform"
+                              data-e-style="min-width:200px;">
+                            {{ getReduceDescription(p.observation) || 'Vide' }}</span>
+                    </td>
+                    <td>
+                        <span editable-text="p.recommandation" e-name="recommandation" e-form="rowform"
+                              data-e-style="min-width:200px;">
+                            {{ getReduceDescription(p.recommandation) || 'Vide' }}</span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <md-table-pagination md-limit="query.limit"
+                                         md-on-paginate="getAll"
+                                         md-limit-options="query.limitOption" md-page="query.page"
+                                         md-boundary-links="true" md-total="{{query.count}}"
+                                         md-label="{{query.label}}" md-page-select></md-table-pagination>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
