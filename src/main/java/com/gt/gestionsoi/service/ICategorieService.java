@@ -1,8 +1,7 @@
 package com.gt.gestionsoi.service;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.Categorie;
+import com.gt.gestionsoi.exception.CustomException;
 
 import java.util.List;
 

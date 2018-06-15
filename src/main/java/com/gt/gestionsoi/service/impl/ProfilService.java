@@ -1,7 +1,6 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.impl.BaseEntityService;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.entity.Permission;
 import com.gt.gestionsoi.entity.Profil;
 import com.gt.gestionsoi.repository.PermissionRepository;

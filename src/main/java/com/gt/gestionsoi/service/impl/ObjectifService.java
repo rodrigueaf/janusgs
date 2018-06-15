@@ -1,8 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Objectif;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.repository.ObjectifRepository;
 import com.gt.gestionsoi.service.IObjectifService;
 import com.gt.gestionsoi.util.MPConstants;

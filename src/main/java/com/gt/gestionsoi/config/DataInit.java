@@ -1,7 +1,7 @@
 package com.gt.gestionsoi.config;
 
-import com.gt.base.util.AuthoritiesConstants;
-import com.gt.base.util.CustomResourceBundleMessageSource;
+import com.gt.gestionsoi.util.AuthoritiesConstants;
+import com.gt.gestionsoi.util.CustomResourceBundleMessageSource;
 import com.gt.gestionsoi.entity.Permission;
 import com.gt.gestionsoi.entity.Profil;
 import com.gt.gestionsoi.entity.Utilisateur;

@@ -1,6 +1,5 @@
 package com.gt.gestionsoi.repository.spec;
 
-import com.gt.base.repository.spec.BaseSpecifications;
 import com.gt.gestionsoi.entity.Categorie;
 import com.gt.gestionsoi.filtreform.CategorieFormulaireDeFiltre;
 import org.springframework.data.jpa.domain.Specification;

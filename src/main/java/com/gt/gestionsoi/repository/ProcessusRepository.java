@@ -1,6 +1,5 @@
 package com.gt.gestionsoi.repository;
 
-import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Processus;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

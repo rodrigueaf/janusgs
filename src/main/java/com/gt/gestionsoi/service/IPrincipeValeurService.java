@@ -1,6 +1,5 @@
 package com.gt.gestionsoi.service;
 
-import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.PrincipeValeur;
 
 import java.util.List;

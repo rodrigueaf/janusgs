@@ -4,9 +4,9 @@ logging:
     
 spring:
     profiles:
-        active: prod
+        active: local
     application:
-        name: JanusGS
+        name: gestionsoi
         description: Application de gestion de soi
     jmx:
         default-domain: gestionsoi
@@ -107,17 +107,4 @@ spring:
 ---
 spring:
     profiles: prod
-    datasource:
-        url: jdbc:postgresql://ec2-54-235-252-23.compute-1.amazonaws.com:5432/dedf8166mhtpc8
-        username: orhsafdbrsyljp
-        password: f951f8b3293a61b67c50eee9a1940a0d0816ad71b408a08731e74de4a8e86027
-        driverClassName: org.postgresql.Driver
-    jpa:
-        database: POSTGRESQL
-        show-sql: true
-        hibernate:
-            ddl-auto: update
-            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQL9Dialect
+    datasource: gestionsoi

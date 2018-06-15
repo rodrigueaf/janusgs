@@ -1,8 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Prevision;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.repository.PrevisionRepository;
 import com.gt.gestionsoi.service.IPrevisionService;
 import org.springframework.beans.factory.annotation.Autowired;

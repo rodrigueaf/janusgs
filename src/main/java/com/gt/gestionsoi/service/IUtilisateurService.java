@@ -1,7 +1,6 @@
 package com.gt.gestionsoi.service;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.IBaseEntityService;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.entity.Utilisateur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,6 @@
 package com.gt.gestionsoi.entity;
 
-import com.gt.base.entity.AbstractAuditingEntity;
-import com.gt.base.util.BaseConstant;
+import com.gt.gestionsoi.util.BaseConstant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,6 +1,6 @@
 package com.gt.gestionsoi.util;
 
-import com.gt.base.exception.CustomException;
+import com.gt.gestionsoi.exception.CustomException;
 import org.springframework.test.web.servlet.*;
 
 /**

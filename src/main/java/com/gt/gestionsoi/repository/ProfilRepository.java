@@ -1,6 +1,5 @@
 package com.gt.gestionsoi.repository;
 
-import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Profil;
 
 import java.util.Optional;

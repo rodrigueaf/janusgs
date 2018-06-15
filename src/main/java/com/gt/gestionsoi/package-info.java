@@ -1,4 +1,4 @@
 /**
- * Package de base de l'application
+ * Package de gestionsoi de l'application
  */
 package com.gt.gestionsoi;

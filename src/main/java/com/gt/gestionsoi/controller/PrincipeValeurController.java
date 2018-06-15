@@ -1,13 +1,12 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.base.controller.BaseEntityController;
-import com.gt.base.exception.CustomException;
-import com.gt.base.util.DefaultMP;
-import com.gt.base.util.Response;
-import com.gt.base.util.ResponseBuilder;
 import com.gt.gestionsoi.entity.PrincipeValeur;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.filtreform.PrincipeValeurFormulaireDeFiltre;
 import com.gt.gestionsoi.service.IPrincipeValeurService;
+import com.gt.gestionsoi.util.DefaultMP;
+import com.gt.gestionsoi.util.Response;
+import com.gt.gestionsoi.util.ResponseBuilder;
 import com.gt.gestionsoi.util.UrlConstants;
 import io.swagger.annotations.*;
 import org.springframework.data.domain.*;

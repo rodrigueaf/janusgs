@@ -1,8 +1,8 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.base.controller.BaseEntityController;
-import com.gt.base.exception.CustomException;
-import com.gt.base.util.*;
+import com.gt.gestionsoi.controller.BaseEntityController;
+import com.gt.gestionsoi.exception.CustomException;
+import com.gt.gestionsoi.util.*;
 import com.gt.gestionsoi.dto.DomainDto;
 import com.gt.gestionsoi.dto.ManagedProfilVM;
 import com.gt.gestionsoi.entity.Permission;

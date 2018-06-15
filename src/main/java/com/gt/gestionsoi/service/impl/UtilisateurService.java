@@ -1,10 +1,9 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.base.exception.CustomException;
-import com.gt.base.service.impl.BaseEntityService;
-import com.gt.base.util.AuthoritiesConstants;
-import com.gt.base.util.CustomResourceBundleMessageSource;
-import com.gt.base.util.SecurityUtils;
+import com.gt.gestionsoi.exception.CustomException;
+import com.gt.gestionsoi.util.AuthoritiesConstants;
+import com.gt.gestionsoi.util.CustomResourceBundleMessageSource;
+import com.gt.gestionsoi.util.SecurityUtils;
 import com.gt.gestionsoi.entity.Permission;
 import com.gt.gestionsoi.entity.Profil;
 import com.gt.gestionsoi.entity.Utilisateur;

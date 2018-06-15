@@ -1,6 +1,5 @@
 package com.gt.gestionsoi.repository.spec;
 
-import com.gt.base.repository.spec.BaseSpecifications;
 import com.gt.gestionsoi.entity.Journal;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;

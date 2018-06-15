@@ -1,16 +1,12 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.base.controller.BaseEntityController;
-import com.gt.base.exception.CustomException;
-import com.gt.base.util.*;
 import com.gt.gestionsoi.dto.ManagedUserVM;
 import com.gt.gestionsoi.entity.Utilisateur;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.filtreform.UtilisateurFormulaireDeFiltre;
 import com.gt.gestionsoi.repository.UtilisateurRepository;
 import com.gt.gestionsoi.service.IUtilisateurService;
-import com.gt.gestionsoi.util.MPConstants;
-import com.gt.gestionsoi.util.ResponseUtil;
-import com.gt.gestionsoi.util.UrlConstants;
+import com.gt.gestionsoi.util.*;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.base.exception.CustomException;
+import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.AbstractControllerTest;
 import com.gt.gestionsoi.util.CustomMockMvc;
 import com.gt.gestionsoi.util.UrlConstants;
