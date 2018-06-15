@@ -1,7 +1,11 @@
 package com.gt.gestionsoi.repository;
 
+import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Objectif;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,4 +18,7 @@ import java.util.Optional;
  */
 public interface ObjectifRepository extends BaseEntityRepository<Objectif, Integer> {
     Optional<Objectif> findByLibelle(String libelle);
+
+    @Query("select c from Objectif c where c.id in :idSet")
+    List<Objectif> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

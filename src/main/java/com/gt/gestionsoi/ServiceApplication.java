@@ -1,7 +1,7 @@
 package com.gt.gestionsoi;
 
-import com.gt.gestionsoi.util.ApplicationContextProvider;
-import com.gt.gestionsoi.util.CustomResourceBundleMessageSource;
+import com.gt.base.util.ApplicationContextProvider;
+import com.gt.base.util.CustomResourceBundleMessageSource;
 import com.gt.gestionsoi.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @version 1.0
  * @since 17/07/2017
  */
-@SpringBootApplication(scanBasePackages = {"com.gt.gestionsoi"})
+@SpringBootApplication(scanBasePackages = {"com.gt.gestionsoi", "com.gt.base"})
 public class ServiceApplication implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
 
     /**

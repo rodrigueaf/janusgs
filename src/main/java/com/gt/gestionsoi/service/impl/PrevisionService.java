@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Prevision;
 import com.gt.gestionsoi.repository.PrevisionRepository;
 import com.gt.gestionsoi.service.IPrevisionService;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Classe Service de l'entité Prevision
@@ -54,5 +56,10 @@ public class PrevisionService extends BaseEntityService<Prevision, Integer> impl
     @Override
     public Page<Prevision> findAllByOrderByIdentifiantDesc(Pageable p) {
         return ((PrevisionRepository) repository).findAllByOrderByIdentifiantDesc(p);
+    }
+
+    @Override
+    public List<Prevision> recupererLaListeVersionnee(Integer[] ints) {
+        return ((PrevisionRepository) repository).recupererLaListeVersionnee(ints);
     }
 }

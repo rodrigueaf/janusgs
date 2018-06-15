@@ -95,16 +95,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/categories").authenticated()
-                    .antMatchers("/journaux").authenticated()
-                    .antMatchers("/objectifs").authenticated()
-//                    .antMatchers("/previsions").authenticated()
-                    .antMatchers("/principes-valeurs").authenticated()
-                    .antMatchers("/processus").authenticated()
-                    .antMatchers("/projets").authenticated()
-                    .antMatchers("/visions").authenticated()
-                    .antMatchers("/profils").authenticated()
-                    .antMatchers("/users").authenticated()
                     .antMatchers(cheminAutoriser()).permitAll()
                     .anyRequest().authenticated();
         }

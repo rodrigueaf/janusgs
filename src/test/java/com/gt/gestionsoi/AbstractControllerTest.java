@@ -1,6 +1,6 @@
 package com.gt.gestionsoi;
 
-import com.gt.gestionsoi.controller.GlobalExceptionHandlerController;
+import com.gt.base.controller.GlobalExceptionHandlerController;
 import com.gt.gestionsoi.util.CustomMockMvc;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;

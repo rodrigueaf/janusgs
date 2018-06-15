@@ -1,6 +1,9 @@
 package com.gt.gestionsoi.service;
 
+import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.Processus;
+
+import java.util.List;
 
 /**
  * Interface Service de l'entité Processus
@@ -11,4 +14,5 @@ import com.gt.gestionsoi.entity.Processus;
  * @since 23/10/2017
  */
 public interface IProcessusService extends IBaseEntityService<Processus, Integer> {
+    List<Processus> recupererLaListeVersionnee(Integer[] ints);
 }

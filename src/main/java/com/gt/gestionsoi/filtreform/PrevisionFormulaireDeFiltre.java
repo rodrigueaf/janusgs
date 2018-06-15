@@ -1,7 +1,7 @@
 package com.gt.gestionsoi.filtreform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.gt.base.filterform.BaseFilterForm;
 import com.gt.gestionsoi.entity.Prevision;
 import com.gt.gestionsoi.repository.spec.PrevisionSpec;
 import org.springframework.data.jpa.domain.Specification;

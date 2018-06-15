@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Objectif;
 import com.gt.gestionsoi.repository.ObjectifRepository;
 import com.gt.gestionsoi.service.IObjectifService;
@@ -8,6 +9,7 @@ import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,5 +48,10 @@ public class ObjectifService extends BaseEntityService<Objectif, Integer> implem
     public synchronized Objectif saveAndFlush(Objectif categorie) throws CustomException {
         controler(categorie);
         return super.saveAndFlush(categorie);
+    }
+
+    @Override
+    public List<Objectif> recupererLaListeVersionnee(Integer[] ints) {
+        return ((ObjectifRepository) repository).recupererLaListeVersionnee(ints);
     }
 }

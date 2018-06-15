@@ -12,6 +12,9 @@ public class UrlConstants {
 
     public static final String SLASH = "/";
 
+    private UrlConstants() {
+    }
+
     public static class PrincipeValeur {
         public static final String VALEUR_RACINE = "principes-valeurs";
         public static final String VALEUR_ID = "principes-valeurs/{valeurId}";
@@ -84,6 +87,11 @@ public class UrlConstants {
         }
     }
 
-    private UrlConstants() {
+    public static class Version {
+        public static final String VERSION_RACINE = "versions";
+        public static final String VERSION_ID = "versions/{id}";
+
+        private Version() {
+        }
     }
 }

@@ -1,20 +1,18 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.gestionsoi.controller.BaseEntityController;
-import com.gt.gestionsoi.exception.CustomException;
-import com.gt.gestionsoi.util.DefaultMP;
-import com.gt.gestionsoi.util.Response;
-import com.gt.gestionsoi.util.ResponseBuilder;
+import com.gt.base.controller.BaseEntityController;
+import com.gt.base.exception.CustomException;
+import com.gt.base.util.DefaultMP;
+import com.gt.base.util.Response;
+import com.gt.base.util.ResponseBuilder;
 import com.gt.gestionsoi.entity.PrincipeValeur;
 import com.gt.gestionsoi.filtreform.PrincipeValeurFormulaireDeFiltre;
 import com.gt.gestionsoi.service.IPrincipeValeurService;
-import com.gt.gestionsoi.util.PermissionsConstants;
 import com.gt.gestionsoi.util.UrlConstants;
 import io.swagger.annotations.*;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +33,21 @@ public class PrincipeValeurController extends BaseEntityController<PrincipeValeu
 
     public PrincipeValeurController(IPrincipeValeurService principeValeurService) {
         super(principeValeurService);
+    }
+
+    @RequestMapping(value = UrlConstants.PrincipeValeur.VALEUR_RACINE + "/liste/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Response> selectionnerListe(@PathVariable String id) {
+        String[] split = id.split("&");
+        Integer[] ints = new Integer[split.length];
+        for (int i = 0; i < split.length; i++) {
+            ints[i] = Integer.valueOf(split[i]);
+        }
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(((IPrincipeValeurService) service).recupererLaListeVersionnee(ints))
+                .buildI18n(), HttpStatus.OK);
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.gt.gestionsoi.service;
 
+import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.PrincipeValeur;
+
+import java.util.List;
 
 /**
  * Interface Service de l'entité PrincipeValeur
@@ -11,4 +14,5 @@ import com.gt.gestionsoi.entity.PrincipeValeur;
  * @since 23/10/2017
  */
 public interface IPrincipeValeurService extends IBaseEntityService<PrincipeValeur, Integer> {
+    List<PrincipeValeur> recupererLaListeVersionnee(Integer[] ints);
 }

@@ -1,8 +1,8 @@
 package com.gt.gestionsoi.cucumber.step;
 
-import com.gt.gestionsoi.exception.CustomException;
-import com.gt.gestionsoi.util.State;
-import com.gt.gestionsoi.util.StateWrapper;
+import com.gt.base.exception.CustomException;
+import com.gt.base.util.State;
+import com.gt.base.util.StateWrapper;
 import com.gt.gestionsoi.AbstractFonctionalControllerTest;
 import com.gt.gestionsoi.dto.ManagedProfilVM;
 import com.gt.gestionsoi.entity.Profil;

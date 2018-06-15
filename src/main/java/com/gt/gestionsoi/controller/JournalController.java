@@ -1,10 +1,10 @@
 package com.gt.gestionsoi.controller;
 
-import com.gt.gestionsoi.controller.BaseEntityController;
-import com.gt.gestionsoi.exception.CustomException;
-import com.gt.gestionsoi.util.DefaultMP;
-import com.gt.gestionsoi.util.Response;
-import com.gt.gestionsoi.util.ResponseBuilder;
+import com.gt.base.controller.BaseEntityController;
+import com.gt.base.exception.CustomException;
+import com.gt.base.util.DefaultMP;
+import com.gt.base.util.Response;
+import com.gt.base.util.ResponseBuilder;
 import com.gt.gestionsoi.entity.Journal;
 import com.gt.gestionsoi.filtreform.JournalFormulaireDeFiltre;
 import com.gt.gestionsoi.service.IJournalService;
@@ -35,6 +35,21 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
 
     public JournalController(IJournalService journalService) {
         super(journalService);
+    }
+
+    @RequestMapping(value = UrlConstants.Journal.JOURNAL_RACINE + "/liste/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Response> selectionnerListe(@PathVariable String id) {
+        String[] split = id.split("&");
+        Integer[] ints = new Integer[split.length];
+        for (int i = 0; i < split.length; i++) {
+            ints[i] = Integer.valueOf(split[i]);
+        }
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(((IJournalService) service).recupererLaListeVersionnee(ints))
+                .buildI18n(), HttpStatus.OK);
     }
 
     /**

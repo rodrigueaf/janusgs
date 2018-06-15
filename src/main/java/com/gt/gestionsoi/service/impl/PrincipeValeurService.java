@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.PrincipeValeur;
 import com.gt.gestionsoi.repository.PrincipeValeurRepository;
 import com.gt.gestionsoi.service.IPrincipeValeurService;
@@ -8,6 +9,7 @@ import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,5 +48,10 @@ public class PrincipeValeurService extends BaseEntityService<PrincipeValeur, Int
     public synchronized PrincipeValeur saveAndFlush(PrincipeValeur principeValeur) throws CustomException {
         controler(principeValeur);
         return super.saveAndFlush(principeValeur);
+    }
+
+    @Override
+    public List<PrincipeValeur> recupererLaListeVersionnee(Integer[] ints) {
+        return ((PrincipeValeurRepository) repository).recupererLaListeVersionnee(ints);
     }
 }

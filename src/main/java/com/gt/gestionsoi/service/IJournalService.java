@@ -1,8 +1,11 @@
 package com.gt.gestionsoi.service;
 
+import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.Journal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Interface Service de l'entité Journal
@@ -15,4 +18,6 @@ import org.springframework.data.domain.Pageable;
 public interface IJournalService extends IBaseEntityService<Journal, Integer> {
 
     Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
+
+    List<Journal> recupererLaListeVersionnee(Integer[] ints);
 }

@@ -1,8 +1,11 @@
 package com.gt.gestionsoi.repository;
 
+import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Categorie;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,4 +21,7 @@ public interface CategorieRepository extends BaseEntityRepository<Categorie, Int
 
     @Query("select c from Categorie c left join fetch c.sousCategories s where c.identifiant = ?1")
     Optional<Categorie> findWithSousCategoriesByIdentifiant(Integer categorieId);
+
+    @Query("select c from Categorie c where c.id in :idSet")
+    List<Categorie> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

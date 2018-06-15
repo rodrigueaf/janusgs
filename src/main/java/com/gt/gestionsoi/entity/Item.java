@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.entity;
 
-import com.gt.gestionsoi.util.BaseConstant;
+import com.gt.base.entity.AbstractAuditingEntity;
+import com.gt.base.util.BaseConstant;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;

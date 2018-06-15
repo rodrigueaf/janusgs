@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gt.base.entity.AbstractAuditingEntity;
 import com.gt.gestionsoi.util.Constants;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Type;

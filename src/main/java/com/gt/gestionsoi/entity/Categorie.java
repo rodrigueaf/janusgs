@@ -1,7 +1,8 @@
 package com.gt.gestionsoi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gt.gestionsoi.util.BaseConstant;
+import com.gt.base.entity.AbstractAuditingEntity;
+import com.gt.base.util.BaseConstant;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

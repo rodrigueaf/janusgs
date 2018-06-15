@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.*;
 import com.gt.gestionsoi.repository.*;
 import com.gt.gestionsoi.service.IJournalService;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Classe Service de l'entité Journal
@@ -76,6 +79,11 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     @Override
     public Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p) {
         return ((JournalRepository) repository).findAllByOrderByIdentifiantDesc(p);
+    }
+
+    @Override
+    public List<Journal> recupererLaListeVersionnee(Integer[] ints) {
+        return ((JournalRepository) repository).recupererLaListeVersionnee(ints);
     }
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.gt.gestionsoi.repository;
 
+import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Utilisateur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

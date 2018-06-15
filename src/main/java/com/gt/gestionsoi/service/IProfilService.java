@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.Profil;
 
 import java.util.Set;

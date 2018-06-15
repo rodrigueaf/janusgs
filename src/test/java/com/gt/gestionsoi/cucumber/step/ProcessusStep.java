@@ -1,6 +1,6 @@
 package com.gt.gestionsoi.cucumber.step;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
 import com.gt.gestionsoi.AbstractFonctionalControllerTest;
 import com.gt.gestionsoi.entity.Processus;
 import com.gt.gestionsoi.filtreform.ProcessusFormulaireDeFiltre;

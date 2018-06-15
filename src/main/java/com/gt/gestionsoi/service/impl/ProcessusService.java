@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Processus;
 import com.gt.gestionsoi.repository.ProcessusRepository;
 import com.gt.gestionsoi.service.IProcessusService;
@@ -8,6 +9,7 @@ import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,5 +48,10 @@ public class ProcessusService extends BaseEntityService<Processus, Integer> impl
     public synchronized Processus saveAndFlush(Processus processus) throws CustomException {
         controler(processus);
         return super.saveAndFlush(processus);
+    }
+
+    @Override
+    public List<Processus> recupererLaListeVersionnee(Integer[] ints) {
+        return ((ProcessusRepository) repository).recupererLaListeVersionnee(ints);
     }
 }

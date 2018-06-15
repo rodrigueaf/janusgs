@@ -1,6 +1,6 @@
 package com.gt.gestionsoi.config;
 
-import com.gt.gestionsoi.util.CustomResourceBundleMessageSource;
+import com.gt.base.util.CustomResourceBundleMessageSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

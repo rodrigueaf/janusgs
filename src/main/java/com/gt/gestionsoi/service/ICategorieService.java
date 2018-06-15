@@ -1,7 +1,10 @@
 package com.gt.gestionsoi.service;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.IBaseEntityService;
 import com.gt.gestionsoi.entity.Categorie;
+
+import java.util.List;
 
 /**
  * Interface Service de l'entité Categorie
@@ -14,4 +17,6 @@ import com.gt.gestionsoi.entity.Categorie;
 public interface ICategorieService extends IBaseEntityService<Categorie, Integer> {
 
     boolean supprimer(Integer categorieId) throws CustomException;
+
+    List<Categorie> recupererLaListeVersionnee(Integer[] ints);
 }

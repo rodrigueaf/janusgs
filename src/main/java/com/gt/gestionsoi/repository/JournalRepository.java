@@ -1,8 +1,13 @@
 package com.gt.gestionsoi.repository;
 
+import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Journal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * Le repository de l'entité Journal
@@ -15,4 +20,7 @@ import org.springframework.data.domain.Pageable;
 public interface JournalRepository extends BaseEntityRepository<Journal, Integer> {
 
     Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
+
+    @Query("select c from Journal c where c.id in :idSet")
+    List<Journal> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

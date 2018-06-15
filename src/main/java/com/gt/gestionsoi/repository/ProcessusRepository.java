@@ -1,7 +1,11 @@
 package com.gt.gestionsoi.repository;
 
+import com.gt.base.repository.BaseEntityRepository;
 import com.gt.gestionsoi.entity.Processus;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,4 +18,7 @@ import java.util.Optional;
  */
 public interface ProcessusRepository extends BaseEntityRepository<Processus, Integer> {
     Optional<Processus> findByLibelle(String libelle);
+
+    @Query("select c from Processus c where c.id in :idSet")
+    List<Processus> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

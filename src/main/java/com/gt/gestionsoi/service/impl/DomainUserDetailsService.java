@@ -1,6 +1,6 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.util.State;
+import com.gt.base.util.State;
 import com.gt.gestionsoi.entity.Utilisateur;
 import com.gt.gestionsoi.exception.UserNotActivatedException;
 import com.gt.gestionsoi.repository.UtilisateurRepository;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Authentifier un utilisateur à partir de la gestionsoi de données
+ * Authentifier un utilisateur à partir de la base de données
  *
  * @author <a href="mailto:claude-rodrigue.affodogandji@ace3i.com?">RODRIGUE
  * AFFODOGANDJI</a>

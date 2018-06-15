@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.exception.CustomException;
+import com.gt.base.exception.CustomException;
+import com.gt.base.service.impl.BaseEntityService;
 import com.gt.gestionsoi.entity.Categorie;
 import com.gt.gestionsoi.repository.CategorieRepository;
 import com.gt.gestionsoi.service.ICategorieService;
@@ -8,6 +9,7 @@ import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,5 +57,10 @@ public class CategorieService extends BaseEntityService<Categorie, Integer> impl
         if (o.isPresent() && !o.get().getSousCategories().isEmpty())
             throw new CustomException(MPConstants.LA_CATEGORIE_A_DEJA_SOUS_CATEGORIE);
         return super.delete(categorieId);
+    }
+
+    @Override
+    public List<Categorie> recupererLaListeVersionnee(Integer[] ints) {
+        return ((CategorieRepository) repository).recupererLaListeVersionnee(ints);
     }
 }
