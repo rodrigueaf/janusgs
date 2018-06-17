@@ -148,7 +148,12 @@ public class VisionController extends BaseEntityController<Vision, Integer> {
             @ApiParam(value = "Le nom de la vision", required = true)
             @PathVariable Integer visionId) throws CustomException {
 
-        return super.delete(visionId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(service.delete(visionId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

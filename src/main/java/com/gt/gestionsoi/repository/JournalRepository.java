@@ -20,6 +20,16 @@ public interface JournalRepository extends BaseEntityRepository<Journal, Integer
 
     Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
 
+    Long countByPrevisionIdentifiant(Integer previsionId);
+
+    Long countByProjetIdentifiant(Integer projetId);
+
+    Long countByProcessusIdentifiant(Integer processusId);
+
+    Long countByCategorieIdentifiant(Integer categorieId);
+
+    Long countByDomaineIdentifiant(Integer domaineId);
+
     @Query("select c from Journal c where c.id in :idSet")
     List<Journal> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

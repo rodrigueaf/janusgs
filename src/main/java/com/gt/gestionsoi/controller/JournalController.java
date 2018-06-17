@@ -151,7 +151,12 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
             @ApiParam(value = "Le nom du journal", required = true)
             @PathVariable Integer journalId) throws CustomException {
 
-        return super.delete(journalId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(service.delete(journalId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

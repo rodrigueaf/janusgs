@@ -37,6 +37,7 @@ public class MPConstants {
     public static final String LE_LIBELLE_DE_LA_CATEGORIE_OBLIGATOIRE = "error.categorie.libelle.obligatoire";
     public static final String LE_LIBELLE_DE_LA_CATEGORIE_EXIST = "error.categorie.libelle.exist";
     public static final String LA_CATEGORIE_A_DEJA_SOUS_CATEGORIE = "error.categorie.a.sous.categorie";
+    public static final String LA_CATEGORIE_DEJA_ASSOCIE = "error.categorie.deja.associe";
 
     /**
      * ***********  Vision ****************
@@ -65,6 +66,7 @@ public class MPConstants {
 
     public static final String LE_LIBELLE_DU_PROCESSUS_OBLIGATOIRE = "error.processus.libelle.obligatoire";
     public static final String LE_LIBELLE_DU_PROCESSUS_EXIST = "error.processus.libelle.exist";
+    public static final String LE_PROCESSUS_DEJA_ASSOCIE = "error.processus.deja.associe";
 
     /**
      * ***********  Processus ****************
@@ -72,6 +74,13 @@ public class MPConstants {
 
     public static final String LE_LIBELLE_DU_PROJET_OBLIGATOIRE = "error.projet.libelle.obligatoire";
     public static final String LE_LIBELLE_DU_PROJET_EXIST = "error.projet.libelle.exist";
+    public static final String LE_PROJET_DEJA_ASSOCIE = "error.projet.deja.associe";
+
+    /**
+     * ***********  Prevision ****************
+     */
+
+    public static final String LA_PREVISION_DEJA_ASSOCIE = "error.prevision.deja.associe";
 
     private MPConstants() {
     }

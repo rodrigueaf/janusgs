@@ -19,6 +19,12 @@ import java.util.List;
 public interface PrevisionRepository extends BaseEntityRepository<Prevision, Integer> {
     Page<Prevision> findAllByOrderByIdentifiantDesc(Pageable p);
 
+    Long countByCategorieIdentifiant(Integer categorieId);
+
+    Long countByDomaineIdentifiant(Integer domaineId);
+
+    Long countByProjetIdentifiant(Integer projetId);
+
     @Query("select c from Prevision c where c.id in :idSet")
     List<Prevision> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
 }

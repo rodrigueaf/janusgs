@@ -1,8 +1,10 @@
 package com.gt.gestionsoi.service.impl;
 
 import com.gt.gestionsoi.entity.Objectif;
+import com.gt.gestionsoi.entity.Version;
 import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.repository.ObjectifRepository;
+import com.gt.gestionsoi.repository.VersionRepository;
 import com.gt.gestionsoi.service.IObjectifService;
 import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,24 @@ import java.util.Optional;
 @Service
 public class ObjectifService extends BaseEntityService<Objectif, Integer> implements IObjectifService {
 
+    private VersionRepository versionRepository;
+
     @Autowired
     public ObjectifService(ObjectifRepository repository) {
         super(repository);
     }
 
     @Override
-    public synchronized Objectif save(Objectif categorie) throws CustomException {
-        controler(categorie);
-        return super.save(categorie);
+    public VersionRepository getVersionRepository() {
+        return versionRepository;
+    }
+
+    @Override
+    public synchronized Objectif save(Objectif objectif) throws CustomException {
+        controler(objectif);
+        objectif = super.save(objectif);
+        miseAJourDeLaVersion(objectif, Version.MOTIF_AJOUT, objectif.getIdentifiant());
+        return objectif;
     }
 
     private void controler(Objectif categorie) throws CustomException {
@@ -44,13 +55,30 @@ public class ObjectifService extends BaseEntityService<Objectif, Integer> implem
     }
 
     @Override
-    public synchronized Objectif saveAndFlush(Objectif categorie) throws CustomException {
-        controler(categorie);
-        return super.saveAndFlush(categorie);
+    public synchronized Objectif saveAndFlush(Objectif objectif) throws CustomException {
+        controler(objectif);
+        objectif = super.saveAndFlush(objectif);
+        miseAJourDeLaVersion(objectif, Version.MOTIF_MODIFICATION, objectif.getIdentifiant());
+        return objectif;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        Objectif objectif = findOne(id);
+        if (super.delete(id)) {
+            miseAJourDeLaVersion(objectif, Version.MOTIF_SUPPRESSION, id);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public List<Objectif> recupererLaListeVersionnee(Integer[] ints) {
         return ((ObjectifRepository) repository).recupererLaListeVersionnee(ints);
+    }
+
+    @Autowired
+    public void setVersionRepository(VersionRepository versionRepository) {
+        this.versionRepository = versionRepository;
     }
 }

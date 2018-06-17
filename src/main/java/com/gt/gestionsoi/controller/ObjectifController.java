@@ -148,7 +148,12 @@ public class ObjectifController extends BaseEntityController<Objectif, Integer> 
             @ApiParam(value = "Le nom du objectif", required = true)
             @PathVariable Integer objectifId) throws CustomException {
 
-        return super.delete(objectifId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(service.delete(objectifId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

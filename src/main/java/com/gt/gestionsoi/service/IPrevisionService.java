@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service;
 
 import com.gt.gestionsoi.entity.Prevision;
+import com.gt.gestionsoi.exception.CustomException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +20,6 @@ public interface IPrevisionService extends IBaseEntityService<Prevision, Integer
     Page<Prevision> findAllByOrderByIdentifiantDesc(Pageable p);
 
     List<Prevision> recupererLaListeVersionnee(Integer[] ints);
+
+    boolean supprimer(Integer id) throws CustomException;
 }

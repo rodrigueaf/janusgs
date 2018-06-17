@@ -59,7 +59,7 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
      * @throws URISyntaxException si le Location URI syntax est incorrect
      */
     @PostMapping(UrlConstants.Projet.PROJET_RACINE)
-    
+
     @ApiOperation(value = "Créer une projet")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Projet enregistré avec succès")
@@ -80,7 +80,7 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
      * modifié
      */
     @PutMapping(UrlConstants.Projet.PROJET_RACINE)
-    
+
     @ApiOperation(value = "Modifier une projet utilisateur")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Projet.class)
@@ -102,7 +102,7 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
      * @return le ResponseEntity avec le status 200 (OK) et la liste des projet
      */
     @GetMapping(UrlConstants.Projet.PROJET_RACINE)
-    
+
     @ApiOperation(value = "Retourner la liste des projet",
             response = Projet.class,
             responseContainer = "List")
@@ -140,7 +140,7 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
      * @return Le ResponseEntity avec le status 200 (OK)
      */
     @DeleteMapping(UrlConstants.Projet.PROJET_ID)
-    
+
     @ApiOperation(value = "Supprimer le projet à partir de son identifiant")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")})
@@ -148,7 +148,12 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
             @ApiParam(value = "Le nom du projet", required = true)
             @PathVariable Integer projetId) throws CustomException {
 
-        return super.delete(projetId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(((IProjetService) service).supprimer(projetId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -159,7 +164,7 @@ public class ProjetController extends BaseEntityController<Projet, Integer> {
      * @param projetFormulaireDeFiltre : L'information de filtre
      * @return ResponseEntity
      */
-    
+
     @RequestMapping(value = UrlConstants.Projet.PROJET_RECHERCHE, method = RequestMethod.POST)
     @ApiOperation(value = "Rechercher des projet",
             response = ResponseEntity.class)

@@ -1,8 +1,10 @@
 package com.gt.gestionsoi.service.impl;
 
 import com.gt.gestionsoi.entity.PrincipeValeur;
+import com.gt.gestionsoi.entity.Version;
 import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.repository.PrincipeValeurRepository;
+import com.gt.gestionsoi.repository.VersionRepository;
 import com.gt.gestionsoi.service.IPrincipeValeurService;
 import com.gt.gestionsoi.util.MPConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,24 @@ import java.util.Optional;
 @Service
 public class PrincipeValeurService extends BaseEntityService<PrincipeValeur, Integer> implements IPrincipeValeurService {
 
+    private VersionRepository versionRepository;
+
     @Autowired
     public PrincipeValeurService(PrincipeValeurRepository repository) {
         super(repository);
     }
 
     @Override
+    public VersionRepository getVersionRepository() {
+        return versionRepository;
+    }
+
+    @Override
     public synchronized PrincipeValeur save(PrincipeValeur principeValeur) throws CustomException {
         controler(principeValeur);
-        return super.save(principeValeur);
+        principeValeur = super.save(principeValeur);
+        miseAJourDeLaVersion(principeValeur, Version.MOTIF_AJOUT, principeValeur.getIdentifiant());
+        return principeValeur;
     }
 
     private void controler(PrincipeValeur categorie) throws CustomException {
@@ -46,11 +57,28 @@ public class PrincipeValeurService extends BaseEntityService<PrincipeValeur, Int
     @Override
     public synchronized PrincipeValeur saveAndFlush(PrincipeValeur principeValeur) throws CustomException {
         controler(principeValeur);
-        return super.saveAndFlush(principeValeur);
+        principeValeur = super.saveAndFlush(principeValeur);
+        miseAJourDeLaVersion(principeValeur, Version.MOTIF_MODIFICATION, principeValeur.getIdentifiant());
+        return principeValeur;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        PrincipeValeur principeValeur = findOne(id);
+        if (super.delete(id)) {
+            miseAJourDeLaVersion(principeValeur, Version.MOTIF_SUPPRESSION, id);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public List<PrincipeValeur> recupererLaListeVersionnee(Integer[] ints) {
         return ((PrincipeValeurRepository) repository).recupererLaListeVersionnee(ints);
+    }
+
+    @Autowired
+    public void setVersionRepository(VersionRepository versionRepository) {
+        this.versionRepository = versionRepository;
     }
 }

@@ -149,7 +149,7 @@ public class CategorieController extends BaseEntityController<Categorie, Integer
                 .title(DefaultMP.TITLE_SUCCESS)
                 .message(DefaultMP.MESSAGE_SUCCESS)
                 .data(((ICategorieService) service).supprimer(categorieId))
-                .buildI18n(), HttpStatus.OK);
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

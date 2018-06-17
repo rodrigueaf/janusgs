@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service.impl;
 
-import com.gt.gestionsoi.entity.*;
+import com.gt.gestionsoi.entity.Journal;
+import com.gt.gestionsoi.entity.Version;
 import com.gt.gestionsoi.exception.CustomException;
 import com.gt.gestionsoi.repository.*;
 import com.gt.gestionsoi.service.IJournalService;
@@ -26,6 +27,8 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     private ObjectifRepository objectifRepository;
     private ProjetRepository projetRepository;
     private ProcessusRepository processusRepository;
+    private VersionRepository versionRepository;
+    private PrevisionRepository previsionRepository;
 
     @Autowired
     public JournalService(JournalRepository repository) {
@@ -33,10 +36,17 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     @Override
+    public VersionRepository getVersionRepository() {
+        return versionRepository;
+    }
+
+    @Override
     public synchronized Journal save(Journal journal) throws CustomException {
         controler(journal);
         construireJournal(journal);
-        return super.save(journal);
+        journal = super.save(journal);
+        miseAJourDeLaVersion(journal, Version.MOTIF_AJOUT, journal.getIdentifiant());
+        return journal;
     }
 
     private void controler(Journal journal) throws CustomException {
@@ -46,25 +56,20 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     private void construireJournal(Journal journal) {
-        if (journal.getCategorie() != null) {
-            journal.setCategorie(categorieRepository.findByLibelle(journal.getCategorie().getLibelle())
-                    .orElseGet(() -> categorieRepository
-                            .save(new Categorie(journal.getCategorie().getLibelle().trim()))));
+        if (journal.getCategorie() != null && journal.getCategorie().getIdentifiant() != null) {
+            journal.setCategorie(categorieRepository.findOne(journal.getCategorie().getIdentifiant()));
         }
-        if (journal.getProjet() != null) {
-            journal.setProjet(projetRepository.findByLibelle(journal.getProjet().getLibelle())
-                    .orElseGet(() -> projetRepository
-                            .save(new Projet(journal.getProjet().getLibelle().trim()))));
+        if (journal.getProjet() != null && journal.getProjet().getIdentifiant() != null) {
+            journal.setProjet(projetRepository.findOne(journal.getProjet().getIdentifiant()));
         }
-        if (journal.getObjectif() != null) {
-            journal.setObjectif(objectifRepository.findByLibelle(journal.getObjectif().getLibelle())
-                    .orElseGet(() -> objectifRepository
-                            .save(new Objectif(journal.getObjectif().getLibelle().trim()))));
+        if (journal.getObjectif() != null && journal.getObjectif().getIdentifiant() != null) {
+            journal.setObjectif(objectifRepository.findOne(journal.getObjectif().getIdentifiant()));
         }
-        if (journal.getProcessus() != null) {
-            journal.setProcessus(processusRepository.findByLibelle(journal.getProcessus().getLibelle())
-                    .orElseGet(() -> processusRepository
-                            .save(new Processus(journal.getProcessus().getLibelle().trim()))));
+        if (journal.getProcessus() != null && journal.getProcessus().getIdentifiant() != null) {
+            journal.setProcessus(processusRepository.findOne(journal.getProcessus().getIdentifiant()));
+        }
+        if (journal.getPrevision() != null && journal.getPrevision().getIdentifiant() != null) {
+            journal.setPrevision(previsionRepository.findOne(journal.getPrevision().getIdentifiant()));
         }
     }
 
@@ -72,7 +77,19 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     public synchronized Journal saveAndFlush(Journal journal) throws CustomException {
         controler(journal);
         construireJournal(journal);
-        return super.saveAndFlush(journal);
+        journal = super.saveAndFlush(journal);
+        miseAJourDeLaVersion(journal, Version.MOTIF_MODIFICATION, journal.getIdentifiant());
+        return journal;
+    }
+
+    @Override
+    public boolean delete(Integer journalId) {
+        Journal journal = findOne(journalId);
+        if (super.delete(journalId)) {
+            miseAJourDeLaVersion(journal, Version.MOTIF_SUPPRESSION, journalId);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -103,5 +120,15 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     @Autowired
     public void setProjetRepository(ProjetRepository projetRepository) {
         this.projetRepository = projetRepository;
+    }
+
+    @Autowired
+    public void setVersionRepository(VersionRepository versionRepository) {
+        this.versionRepository = versionRepository;
+    }
+
+    @Autowired
+    public void setPrevisionRepository(PrevisionRepository previsionRepository) {
+        this.previsionRepository = previsionRepository;
     }
 }

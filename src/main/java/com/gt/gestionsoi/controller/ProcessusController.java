@@ -148,7 +148,12 @@ public class ProcessusController extends BaseEntityController<Processus, Integer
             @ApiParam(value = "Le nom du processus", required = true)
             @PathVariable Integer processusId) throws CustomException {
 
-        return super.delete(processusId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(((IProcessusService)service).supprimer(processusId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

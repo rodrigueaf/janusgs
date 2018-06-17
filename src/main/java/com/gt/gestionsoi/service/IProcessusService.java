@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service;
 
 import com.gt.gestionsoi.entity.Processus;
+import com.gt.gestionsoi.exception.CustomException;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface IProcessusService extends IBaseEntityService<Processus, Integer> {
     List<Processus> recupererLaListeVersionnee(Integer[] ints);
+
+    boolean supprimer(Integer id) throws CustomException;
 }

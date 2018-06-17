@@ -59,7 +59,7 @@ public class PrevisionController extends BaseEntityController<Prevision, Integer
      * @throws URISyntaxException si le Location URI syntax est incorrect
      */
     @PostMapping(UrlConstants.Prevision.PREVISION_RACINE)
-    
+
     @ApiOperation(value = "Créer une prévision")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Prevision enregistrée avec succès")
@@ -80,7 +80,7 @@ public class PrevisionController extends BaseEntityController<Prevision, Integer
      * modifiée
      */
     @PutMapping(UrlConstants.Prevision.PREVISION_RACINE)
-    
+
     @ApiOperation(value = "Modifier une prévision")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Prevision.class)
@@ -144,7 +144,7 @@ public class PrevisionController extends BaseEntityController<Prevision, Integer
      * @return Le ResponseEntity avec le status 200 (OK)
      */
     @DeleteMapping(UrlConstants.Prevision.PREVISION_ID)
-    
+
     @ApiOperation(value = "Supprimer la prévision à partir de son identifiant")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")})
@@ -152,7 +152,12 @@ public class PrevisionController extends BaseEntityController<Prevision, Integer
             @ApiParam(value = "Le nom de la prévision", required = true)
             @PathVariable Integer previsionId) throws CustomException {
 
-        return super.delete(previsionId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(((IPrevisionService) service).supprimer(previsionId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -163,7 +168,7 @@ public class PrevisionController extends BaseEntityController<Prevision, Integer
      * @param previsionFormulaireDeFiltre : L'information de filtre
      * @return ResponseEntity
      */
-    
+
     @RequestMapping(value = UrlConstants.Prevision.PREVISION_RECHERCHE, method = RequestMethod.POST)
     @ApiOperation(value = "Rechercher des previsions",
             response = ResponseEntity.class)

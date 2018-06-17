@@ -148,7 +148,12 @@ public class PrincipeValeurController extends BaseEntityController<PrincipeValeu
             @ApiParam(value = "Le nom du principeValeur", required = true)
             @PathVariable Integer valeurId) throws CustomException {
 
-        return super.delete(valeurId);
+        return new ResponseEntity<>(ResponseBuilder.success()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(service.delete(valeurId))
+                .buildI18n(), HttpStatus.NO_CONTENT);
     }
 
     /**

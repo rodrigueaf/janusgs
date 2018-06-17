@@ -1,6 +1,7 @@
 package com.gt.gestionsoi.service;
 
 import com.gt.gestionsoi.entity.Projet;
+import com.gt.gestionsoi.exception.CustomException;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ import java.util.List;
 public interface IProjetService extends IBaseEntityService<Projet, Integer> {
 
     List<Projet> recupererLaListeVersionnee(Integer[] ints);
+
+    boolean supprimer(Integer id) throws CustomException;
 }
