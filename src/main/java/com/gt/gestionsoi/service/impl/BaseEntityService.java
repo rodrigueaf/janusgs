@@ -105,7 +105,7 @@ public abstract class BaseEntityService<T extends AbstractAuditingEntity, I exte
         if (!vs.isEmpty()) {
             version.setValeur(vs.get(0).getValeur() + 1);
         } else {
-            version.setValeur(1);
+            version.setValeur(Integer.parseInt(id.toString()));
         }
         getVersionRepository().save(version);
     }
