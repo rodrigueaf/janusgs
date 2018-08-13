@@ -19,4 +19,14 @@ public interface IJournalService extends IBaseEntityService<Journal, Integer> {
     Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
 
     List<Journal> recupererLaListeVersionnee(Integer[] ints);
+
+    /**
+     * Les ligne de journal à importer doivent respecter le format
+     * Date;Heure_debut;Heure_fin;Description|
+     * où ";" est le séparateur de colonne et "|" est le séparateur de ligne.
+     * Chaque ligne correspond à une ligne du journal
+     *
+     * @param journal
+     */
+    void importer(String journal);
 }

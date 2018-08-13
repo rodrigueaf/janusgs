@@ -65,3 +65,10 @@ Fonctionnalité: Gestion du journal
     Etant donné que deux journal étaient déjà enregistrés
     Lorsqu' on recherche des journaux en fonction d'un critère
     Alors les journaux récupérés doivent respecter le critère défini
+
+  Scénario: Importation de ligne de journal
+    Etant donné qu'on dispose d'un journal de deux lignes bien formatées
+    Et qu'aucun journal n'était pas enregistré
+    Lorsqu' on importe ce journal
+    Alors on obtient une réponse confirmant la réussite de l'opération d'ajout de le journal
+    Et 2 journal est créé

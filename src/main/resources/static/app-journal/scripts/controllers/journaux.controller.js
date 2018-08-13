@@ -394,3 +394,27 @@ angular.module('app')
                 };
             }
         ]);
+
+angular.module('app')
+    .controller('JournauxControllerImport',
+        ['$scope', 'PrevisionService', 'utils', 'uiNotif', 'CategorieService',
+            'ProjetService', 'ProcessusService', 'ObjectifService', 'JournalService',
+            function ($scope, PrevisionService, utils, uiNotif,
+                      CategorieService, ProjetService, ProcessusService, ObjectifService, JournalService) {
+                $scope.journal = null;
+
+                var refactorer = function (text) {
+                    return text.replace("\n", "|");
+                };
+
+                $scope.savePrevision = function () {
+                    $scope.journal = refactorer($scope.journal);
+                    $scope.promise = JournalService.import($scope.journal).$promise;
+                    $scope.promise.then(function (response) {
+                        uiNotif.info(response.message);
+                    }, function (error) {
+                        uiNotif.info(error.data.message);
+                    });
+                };
+            }
+        ]);

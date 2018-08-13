@@ -81,13 +81,22 @@ default.password: admin
 spring:
     profiles: local
     datasource:
-        url: jdbc:mysql://${spring.datasource.hostname}:${spring.datasource.port}/${spring.datasource.database}
+        url: jdbc:postgresql://${spring.datasource.hostname}:${spring.datasource.port}/${spring.datasource.database}
         hostname: localhost
-        port: 3306
+        port: 5432
         database: gestionsoi
-        username: root
-        password:
-        driver-class-name: com.mysql.jdbc.Driver
+        username: postgres
+        password: admin
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        database: POSTGRESQL
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
 server:
   port: 8181
