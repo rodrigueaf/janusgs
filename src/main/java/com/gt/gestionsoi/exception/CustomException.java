@@ -7,7 +7,7 @@ package com.gt.gestionsoi.exception;
  * <a href="mailto:love.faya@ace3i.com?">Love</a>
  *
  */
-public class CustomException extends Exception {
+public class CustomException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

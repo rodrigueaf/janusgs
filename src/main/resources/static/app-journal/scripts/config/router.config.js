@@ -45,6 +45,16 @@ angular.module('app')
                             label: 'Journal'
                         }
                     })
+                    // route vers la modification ou l'ajout d'un compte
+                    .state('ui.journaux.import', {
+                        url: '/import',
+                        controller: 'JournauxControllerImport',
+                        templateUrl: baseViewUri + 'journaux.import.html',
+                        ncyBreadcrumb: {
+                            parent: 'Accueil',
+                            label: 'Journal'
+                        }
+                    })
                 ;
             }
         ]

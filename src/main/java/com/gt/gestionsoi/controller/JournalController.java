@@ -13,7 +13,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URISyntaxException;
 import java.util.Collections;
 
 /**
@@ -48,21 +47,17 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
     }
 
     /**
-     * POST /journaux : Créer une journal utilisateur.
+     * POST /journaux : Créer une journal.
      *
      * @param journal Le journal à créer
      * @return le ResponseEntity avec le status 201 (Created) et le nouveau
-     * journal dans le corps, ou le status 500 (Bad Request) si le nom du journal
-     * déjà utilisés
-     * @throws URISyntaxException si le Location URI syntax est incorrect
+     * journal dans le corps
      */
     @PostMapping(UrlConstants.Journal.JOURNAL_RACINE)
     @Secured(PermissionsConstants.PERMISSION_JOURNAL)
     @ApiOperation(value = "Créer une journal")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Journal enregistré avec succès")
-            ,
-            @ApiResponse(code = 500, message = "Si le libelle du journal déjà utilisés", response = Response.class)})
+            @ApiResponse(code = 201, message = "Journal enregistré avec succès")})
     public ResponseEntity<Response> ajouter(@Valid @RequestBody Journal journal)
             throws CustomException {
         return super.create(journal);
@@ -72,20 +67,13 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
      * PUT /journaux : Modifier une journal.
      *
      * @param journal Le journal à modifier
-     * @return le ResponseEntity avec le status 200 (OK) et le journal modifié ,
-     * ou avec le status 500 (Bad Request) si le nom du journal existe déjà, ou
-     * le status 500 (Internal Server Error) si le journal ne peut pas être
-     * modifié
+     * @return le ResponseEntity avec le status 200 (OK) et le journal modifié
      */
     @PutMapping(UrlConstants.Journal.JOURNAL_RACINE)
 
     @ApiOperation(value = "Modifier une journal utilisateur")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Journal.class)
-            ,
-            @ApiResponse(code = 500, message = "Si le libellé du journal est déjà utilisé", response = Response.class)
-            ,
-            @ApiResponse(code = 500, message = "Si le journal ne peut pas être modifié", response = Response.class)})
+            @ApiResponse(code = 200, message = "OK", response = Journal.class)})
     public ResponseEntity<Response> modifier(
             @ApiParam(value = "Le journal à modifier", required = true)
             @Valid @RequestBody Journal journal)
@@ -196,6 +184,29 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
                 .title(DefaultMP.TITLE_SUCCESS)
                 .message(DefaultMP.MESSAGE_SUCCESS)
                 .data(journalFind)
+                .buildI18n(), HttpStatus.OK);
+    }
+
+    /**
+     * POST /journaux : Importer un journal.
+     *
+     * @param journal Le journal à importer
+     * @return le ResponseEntity avec le status 201 (Created) et le nouveau
+     * journal dans le corps
+     */
+    @PostMapping(UrlConstants.Journal.JOURNAL_IMPORT)
+    @Secured(PermissionsConstants.PERMISSION_JOURNAL)
+    @ApiOperation(value = "Importer un journal")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Journal importé avec succès")})
+    public ResponseEntity<Response> importer(@RequestBody String journal)
+            throws CustomException {
+        ((IJournalService) service).importer(journal);
+        return new ResponseEntity<>(ResponseBuilder.info()
+                .code(null)
+                .title(DefaultMP.TITLE_SUCCESS)
+                .message(DefaultMP.MESSAGE_SUCCESS)
+                .data(Boolean.TRUE)
                 .buildI18n(), HttpStatus.OK);
     }
 

@@ -7,6 +7,7 @@ import com.gt.gestionsoi.filtreform.JournalFormulaireDeFiltre;
 import com.gt.gestionsoi.util.CustomMockMvc;
 import com.gt.gestionsoi.util.TestUtil;
 import com.gt.gestionsoi.util.UrlConstants;
+import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.fr.Alors;
@@ -30,6 +31,7 @@ public class JournalStep extends AbstractFonctionalControllerTest {
     private static final String UPDATE_DESCRIPTION = "nomUpdate";
     private CustomMockMvc.CustomResultActions perform;
     private Journal journal;
+    private String ligneAImporter;
 
     public static Journal getJournal() {
         Journal journal = new Journal();
@@ -220,5 +222,18 @@ public class JournalStep extends AbstractFonctionalControllerTest {
     @Alors("^on obtient une réponse confirmant l'échec de l'opération de modification de le journal$")
     public void onObtientUneRéponseConfirmantLÉchecDeLOpérationDeModificationDeLeJournal() throws CustomException {
         this.perform.andExpect(status().isInternalServerError());
+    }
+
+    @Etantdonné("^qu'on dispose d'un journal de deux lignes bien formatées$")
+    public void quOnDisposeDUneLigneDeJournalBienFormatée() {
+        ligneAImporter = "12/08/2018;7:30;9:30;Un test|12/08/2018;10:30;13:30;Un autre test";
+    }
+
+    @Lorsqu("^on importe ce journal$")
+    public void onImporteCetteLigne() throws IOException, CustomException {
+        this.perform = restSampleMockMvc.perform(
+                post(UrlConstants.SLASH + UrlConstants.Journal.JOURNAL_IMPORT)
+                        .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                        .content(TestUtil.convertObjectToJsonBytes(ligneAImporter)));
     }
 }

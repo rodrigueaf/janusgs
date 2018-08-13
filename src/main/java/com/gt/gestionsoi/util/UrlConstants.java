@@ -31,6 +31,7 @@ public class UrlConstants {
         public static final String JOURNAL_RACINE = "journaux";
         public static final String JOURNAL_ID = "journaux/{journalId}";
         public static final String JOURNAL_RECHERCHE = "journaux/search";
+        public static final String JOURNAL_IMPORT = "journaux/import";
     }
 
     public static class Categorie {
