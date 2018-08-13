@@ -1,0 +1,48 @@
+<!-- entête titre et file d'arial -->
+<div class="card-heading" ng-init="onState()">
+    <h2>Importer un journal</h2>
+</div>
+
+<!-- corps -->
+<div class="card-body no-padding-b">
+    <section class="row">
+        <div class="col-md-12">
+
+            {{objectifForm.$show()}}
+
+            <!-- formulaire d'édition d'un profil -->
+            <form class="form-horizontal"
+                  editable-form name="objectifForm"
+                  onaftersave="savePrevision()">
+
+                <!-- champ libelle du profil -->
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Journal
+                        <small class="text-danger">*</small>
+                        : </label>
+                    <div class="col-sm-6">
+                        <textarea ng-model="journal" cols="50" rows="10"></textarea>
+                        <p>Veuillez respecter le motif suivant : Date;Heure_debut;Heure_fin;Description</p>
+                        <p>Example : 12/08/2018;09:10;10:30;Création d'une ligne</p>
+                    </div>
+                </div>
+
+                <!-- button de validation et d'annulation -->
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-6">
+							<span ng-show="objectifForm.$visible">
+								<button type="submit" md-ink-ripple id="btn-save"
+                                        class="md-btn md-raised m-b btn-fw green"
+                                        ng-disabled="objectifForm.$waiting">Importer</button>
+								<button type="reset" md-ink-ripple
+                                        id="btn-cancel" class="md-btn md-flat btn-fw"
+                                        ng-disabled="objectifForm.$waiting"
+                                        ng-click="closeForm(objectifForm)">Annuler</button>
+							</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
