@@ -113,7 +113,7 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
      */
     @Override
     public void importer(String journal) {
-        String patternARespecter = "(\\d{2}/\\d{2}/\\d{4};\\d{2}:\\d{2};\\d{2}:\\d{2};[^;]*\\|?)+";
+        String patternARespecter = "(\\d{2}/\\d{2}/\\d{4};(\\d{2}:\\d{2})?;(\\d{2}:\\d{2})?;[^;]*\\|?)+";
         if (!Pattern.matches(patternARespecter, journal)) {
             throw new CustomException("error.pattern.non.respecter");
         }
