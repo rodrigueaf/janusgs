@@ -123,10 +123,12 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
                     Journal j = new Journal();
                     try {
                         j.setDateCreation(new SimpleDateFormat("dd/MM/yyyy").parse(split[0]));
-                        j.setHeureDebutRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
-                                .parse(split[0] + " " + split[1]));
-                        j.setHeureFinRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
-                                .parse(split[0] + " " + split[2]));
+                        if(split[1] != null && !split[1].isEmpty())
+                            j.setHeureDebutRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
+                                    .parse(split[0] + " " + split[1]));
+                        if(split[2] != null && !split[2].isEmpty())
+                            j.setHeureFinRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
+                                    .parse(split[0] + " " + split[2]));
                         j.setDescription(split[3]);
                         return j;
                     } catch (ParseException e) {
