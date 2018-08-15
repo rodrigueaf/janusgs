@@ -404,7 +404,7 @@ angular.module('app')
                 $scope.journal = null;
 
                 var refactorer = function (text) {
-                    return text.replace("\n", "|");
+                    return text.split('\n').join('|');
                 };
 
                 $scope.savePrevision = function () {
