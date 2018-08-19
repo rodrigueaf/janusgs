@@ -35,7 +35,7 @@ public class Prevision extends Item {
     private Short estimationDuree;
     private Float urgence;
     private Float importance;
-    private Integer duree;
+    private Double duree;
     @Temporal(TemporalType.DATE)
     private Date periodeDebutPrevueRealisation;
     @Temporal(TemporalType.DATE)
@@ -71,11 +71,11 @@ public class Prevision extends Item {
         this.finalite = finalite;
     }
 
-    public Integer getDuree() {
+    public Double getDuree() {
         return duree;
     }
 
-    public void setDuree(Integer duree) {
+    public void setDuree(Double duree) {
         this.duree = duree;
     }
 

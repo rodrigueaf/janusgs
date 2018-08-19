@@ -404,14 +404,14 @@ angular.module('app')
                 $scope.journal = null;
 
                 var refactorer = function (text) {
-                    return text.split('\n').join('|');
+                    return text.split('\n');
                 };
 
                 $scope.savePrevision = function () {
-                    $scope.journal = refactorer($scope.journal);
-                    $scope.promise = JournalService.import($scope.journal).$promise;
+                    $scope.promise = JournalService.import(refactorer($scope.journal)).$promise;
                     $scope.promise.then(function (response) {
                         uiNotif.info(response.message);
+                        $scope.journal = null;
                     }, function (error) {
                         uiNotif.info(error.data.message);
                     });

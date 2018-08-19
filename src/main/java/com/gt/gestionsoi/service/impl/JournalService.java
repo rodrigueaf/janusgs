@@ -109,24 +109,26 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     /**
-     * @see IJournalService#importer(String)
+     * @see IJournalService#importer(String[])
      */
     @Override
-    public void importer(String journal) {
-        String patternARespecter = "(\\d{2}/\\d{2}/\\d{4};(\\d{2}:\\d{2})?;(\\d{2}:\\d{2})?;[^;]*\\|?)+";
-        if (!Pattern.matches(patternARespecter, journal)) {
-            throw new CustomException("error.pattern.non.respecter");
+    public void importer(String[] journal) {
+        String patternARespecter = "(\\d{2}/\\d{2}/\\d{4};(\\d{2}:\\d{2})?;(\\d{2}:\\d{2})?;[^;]*)+";
+        for (int i = 0; i < journal.length; i++) {
+            if (!Pattern.matches(patternARespecter, journal[i])) {
+                throw new CustomException("Le texte importé ne respecte pas le format requis à la ligne " + (i + 1));
+            }
         }
-        Arrays.stream(journal.split("\\|"))
+        Arrays.stream(journal)
                 .map(l -> {
                     String[] split = l.split(";");
                     Journal j = new Journal();
                     try {
                         j.setDateCreation(new SimpleDateFormat("dd/MM/yyyy").parse(split[0]));
-                        if(split[1] != null && !split[1].isEmpty())
+                        if (split[1] != null && !split[1].isEmpty())
                             j.setHeureDebutRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
                                     .parse(split[0] + " " + split[1]));
-                        if(split[2] != null && !split[2].isEmpty())
+                        if (split[2] != null && !split[2].isEmpty())
                             j.setHeureFinRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
                                     .parse(split[0] + " " + split[2]));
                         j.setDescription(split[3]);

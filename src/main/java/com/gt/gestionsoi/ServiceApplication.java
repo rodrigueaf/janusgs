@@ -146,6 +146,7 @@ public class ServiceApplication implements ApplicationListener<EmbeddedServletCo
         CustomResourceBundleMessageSource messageSource = new CustomResourceBundleMessageSource();
         messageSource.setBasenames("i18n/default/messages", "i18n/gestionsoi/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
 

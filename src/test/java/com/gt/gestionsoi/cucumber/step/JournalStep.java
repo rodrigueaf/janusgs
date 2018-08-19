@@ -31,7 +31,7 @@ public class JournalStep extends AbstractFonctionalControllerTest {
     private static final String UPDATE_DESCRIPTION = "nomUpdate";
     private CustomMockMvc.CustomResultActions perform;
     private Journal journal;
-    private String ligneAImporter;
+    private String[] ligneAImporter;
 
     public static Journal getJournal() {
         Journal journal = new Journal();
@@ -226,7 +226,7 @@ public class JournalStep extends AbstractFonctionalControllerTest {
 
     @Etantdonné("^qu'on dispose d'un journal de deux lignes bien formatées$")
     public void quOnDisposeDUneLigneDeJournalBienFormatée() {
-        ligneAImporter = "12/08/2018;7:30;9:30;Un test|12/08/2018;10:30;13:30;Un autre test";
+        ligneAImporter = new String[]{"12/08/2018;7:30;9:30;Un test", "12/08/2018;10:30;13:30;Un autre test"};
     }
 
     @Lorsqu("^on importe ce journal$")

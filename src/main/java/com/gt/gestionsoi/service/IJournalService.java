@@ -28,5 +28,5 @@ public interface IJournalService extends IBaseEntityService<Journal, Integer> {
      *
      * @param journal
      */
-    void importer(String journal);
+    void importer(String[] journal);
 }

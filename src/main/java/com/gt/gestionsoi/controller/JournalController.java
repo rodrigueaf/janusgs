@@ -199,7 +199,7 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
     @ApiOperation(value = "Importer un journal")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Journal importé avec succès")})
-    public ResponseEntity<Response> importer(@RequestBody String journal)
+    public ResponseEntity<Response> importer(@RequestBody String[] journal)
             throws CustomException {
         ((IJournalService) service).importer(journal);
         return new ResponseEntity<>(ResponseBuilder.info()

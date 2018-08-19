@@ -25,7 +25,7 @@ public abstract class Item extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer identifiant;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3000)
     String description;
     Short tauxAchevement;
     TypeItem typeItem;
