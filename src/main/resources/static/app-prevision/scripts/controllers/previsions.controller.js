@@ -24,7 +24,7 @@ angular.module('app')
                 $scope.previsions = [];
 
                 $scope.getReduceDescription = function (fullDescription, taille) {
-                    taille = angular.isUndefined(taille) ? 50 : taille;
+                    taille = angular.isUndefined(taille) ? 100 : taille;
                     if (fullDescription !== null && !angular.isUndefined(fullDescription)
                         && fullDescription.length > taille) {
                         return fullDescription.substring(0, taille) + "...";
