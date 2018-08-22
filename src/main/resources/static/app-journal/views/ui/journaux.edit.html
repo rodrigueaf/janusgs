@@ -54,8 +54,9 @@
                 <tr style="font-weight: bold">
                     <td style="text-align: center;">Actions</td>
                     <td style="text-align: center;">Prévision</td>
-                    <td style="text-align: center;">Date début</td>
-                    <td style="text-align: center;">Date fin</td>
+                    <td style="text-align: center;">Date</td>
+                    <td style="text-align: center;">Heure début</td>
+                    <td style="text-align: center;">Heure fin</td>
                     <td style="text-align: center;">Elément</td>
                     <td style="text-align: center;">Durée</td>
                     <td style="text-align: center;">Domaine</td>
@@ -115,25 +116,34 @@
                         </div>
                     </td>
                     <td style="text-align: center;">
+                        <a href="#" editable-combodate="p.dateRealisation"
+                           data-e-name="dateRealisation"
+                           id="dateRealisation"
+                           e-min-year="2016" e-max-year="2025"
+                           e-format="MM-DD-YYYY" e-template="DD MM YYYY"
+                           e-smartDays="true"
+                           data-e-form="rowform">
+                            {{ (p.heureDebutRealisation | date:"dd/MM/yyyy") || 'Vide' }}
+                        </a>
+                    </td>
+                    <td style="text-align: center;">
                         <a href="#" editable-combodate="p.heureDebutRealisation"
                            data-e-name="heureDebutRealisation"
                            id="heureDebutRealisation"
-                           e-min-year="2016" e-max-year="2025"
-                           e-format="MM-DD-YYYY HH:mm" e-template="DD MM YYYY HH:mm"
+                           e-format="HH:mm" e-template="HH:mm"
                            e-smartDays="true"
                            data-e-form="rowform">
-                            {{ (p.heureDebutRealisation | date:"dd/MM/yyyy HH:mm") || 'Vide' }}
+                            {{ (p.heureDebutRealisation | date:"HH:mm") || 'Vide' }}
                         </a>
                     </td>
                     <td style="text-align: center;">
                         <a href="#" editable-combodate="p.heureFinRealisation"
                            data-e-name="heureFinRealisation"
                            id="heureFinRealisation"
-                           e-min-year="2016" e-max-year="2025"
-                           e-format="MM-DD-YYYY HH:mm" e-template="D MM YYYY HH:mm"
+                           e-format="HH:mm" e-template="HH:mm"
                            e-smartDays="true"
                            data-e-form="rowform">
-                            {{ (p.heureFinRealisation | date:"dd/MM/yyyy HH:mm") || 'Vide' }}
+                            {{ (p.heureFinRealisation | date:"HH:mm") || 'Vide' }}
                         </a>
                     </td>
                     <td>
