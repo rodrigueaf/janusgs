@@ -124,7 +124,8 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
                     String[] split = l.split(";");
                     Journal j = new Journal();
                     try {
-                        j.setDateCreation(new SimpleDateFormat("dd/MM/yyyy").parse(split[0]));
+                        j.setDateRealisation(new SimpleDateFormat("dd/MM/yyyy").parse(split[0]));
+                        j.setDateCreation(j.getDateRealisation());
                         if (split[1] != null && !split[1].isEmpty())
                             j.setHeureDebutRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
                                     .parse(split[0] + " " + split[1]));
