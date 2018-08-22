@@ -292,6 +292,7 @@ angular.module('app')
                 $scope.addPrevision = function () {
                     $scope.inserted = {
                         identifiant: null,
+                        dateRealisation: null,
                         heureDebutRealisation: null,
                         heureFinRealisation: null,
                         description: null,
