@@ -1,0 +1,56 @@
+<!-- entête titre et file d'arial -->
+<div class="card-heading" ng-init="onState()">
+    <h2>Journal DataGrid</h2>
+</div>
+
+<!-- corps -->
+<div class="card-body no-padding-b">
+    <div class="row">
+        <div class="col-md-12">
+            <a md-ink-ripple id="filterToggle"
+               class="btn btn-info" ng-click="toggleFilterRow()">
+                <span class="mdi-content-filter-list i-20"></span> Afficher les filtres
+            </a>
+            <a md-ink-ripple id="refreshButton"
+               class="btn btn-primary" ng-click="refreshData()">
+                <span class="mdi-navigation-refresh i-20"></span> Rafraichir
+            </a>
+            <a ng-click="addPrevision()"
+               id="btn-add" class="btn btn-success">
+                <span class="mdi-content-add-box i-20"></span> Ajouter une ligne
+            </a>
+            <a ng-click="removePrevision($event)"
+               id="btn-remove" class="btn btn-danger">
+                <span class="mdi-content-remove-circle i-20"></span> Supprimer ligne(s) sélectionnée(s)
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <md-table-pagination md-limit="query.limit"
+                                 md-on-paginate="getAll"
+                                 md-limit-options="query.limitOption" md-page="query.page"
+                                 md-boundary-links="true" md-total="{{query.count}}"
+                                 md-label="{{query.label}}" md-page-select></md-table-pagination>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Dernière cellule modifiée :</strong> {{msg.lastCellEdited}}
+            <br>
+            <div id="grid1" ui-grid="gridOptions" ui-grid-cellNav ui-grid-edit ui-grid-resize-columns
+                 ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-importer ui-grid-exporter
+                 ui-grid-grouping class="grid"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <md-table-pagination md-limit="query.limit"
+                                 md-on-paginate="getAll"
+                                 md-limit-options="query.limitOption" md-page="query.page"
+                                 md-boundary-links="true" md-total="{{query.count}}"
+                                 md-label="{{query.label}}" md-page-select></md-table-pagination>
+        </div>
+    </div>
+</div>
+

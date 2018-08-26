@@ -127,14 +127,17 @@
                         </a>
                     </td>
                     <td style="text-align: center;">
-                        <a href="#" editable-combodate="p.heureDebutRealisation"
-                           data-e-name="heureDebutRealisation"
-                           id="heureDebutRealisation"
-                           e-format="MM-DD-YYYY HH:mm" e-template="DD MM YYYY HH:mm"
-                           e-smartDays="true"
-                           data-e-form="rowform">
-                            {{ (p.heureDebutRealisation | date:"HH:mm") || 'Vide' }}
-                        </a>
+                        <div class="input-group">
+                            <input id="heureDebutRealisation" type="text" class="form-control" name="heureDebutRealisation"
+                                   datepicker-options="options" datetime-picker="{{dateformat}}"
+                                   ng-model="p.heureDebutRealisation" is-open="datePickerOpenStatus.heureDebutRealisation"
+                                   required/>
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openCalendar('heureDebutRealisation')">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                            </span>
+                        </div>
                     </td>
                     <td style="text-align: center;">
                         <a href="#" editable-combodate="p.heureFinRealisation"

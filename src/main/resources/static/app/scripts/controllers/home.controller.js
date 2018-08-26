@@ -32,9 +32,12 @@ angular.module('app')
                 };
                 $scope.objectifClick = function () {
                     $state.go('ui.objectifs.list');
-                }
+                };
                 $scope.journalImportationClick = function () {
                     $state.go('ui.journaux.import');
+                };
+                $scope.journalGridClick = function () {
+                    $state.go('ui.journaux.grid');
                 }
             }
         ]);

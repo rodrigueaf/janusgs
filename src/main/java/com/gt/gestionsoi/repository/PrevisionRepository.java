@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Le repository de l'entité Prevision
@@ -27,4 +28,6 @@ public interface PrevisionRepository extends BaseEntityRepository<Prevision, Int
 
     @Query("select c from Prevision c where c.id in :idSet")
     List<Prevision> recupererLaListeVersionnee(@Param("idSet") Integer[] ints);
+
+    Optional<Prevision> findByDescription(String description);
 }

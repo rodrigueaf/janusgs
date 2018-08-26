@@ -3,13 +3,13 @@ package com.gt.gestionsoi.service.impl;
 import com.gt.gestionsoi.entity.Journal;
 import com.gt.gestionsoi.entity.Version;
 import com.gt.gestionsoi.exception.CustomException;
+import com.gt.gestionsoi.exception.ResourceNotFoundException;
 import com.gt.gestionsoi.repository.*;
 import com.gt.gestionsoi.service.IJournalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,25 +62,52 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     private void construireJournal(Journal journal) {
-        if (journal.getCategorie() != null && journal.getCategorie().getIdentifiant() != null) {
-            journal.setCategorie(categorieRepository.findOne(journal.getCategorie().getIdentifiant()));
+        if (journal.getCategorie() != null) {
+            if (journal.getCategorie().getIdentifiant() != null)
+                journal.setCategorie(categorieRepository.findOne(journal.getCategorie().getIdentifiant()));
+            else if (journal.getCategorie().getLibelle() != null)
+                journal.setCategorie(categorieRepository.findByLibelle(journal.getCategorie().getLibelle())
+                        .orElseThrow(ResourceNotFoundException::new));
         }
-        if (journal.getProjet() != null && journal.getProjet().getIdentifiant() != null) {
-            journal.setProjet(projetRepository.findOne(journal.getProjet().getIdentifiant()));
+        if (journal.getDomaine() != null) {
+            if (journal.getDomaine().getIdentifiant() != null)
+                journal.setCategorie(categorieRepository.findOne(journal.getDomaine().getIdentifiant()));
+            else if (journal.getDomaine().getLibelle() != null)
+                journal.setDomaine(categorieRepository.findByLibelle(journal.getDomaine().getLibelle())
+                        .orElseThrow(ResourceNotFoundException::new));
         }
-        if (journal.getObjectif() != null && journal.getObjectif().getIdentifiant() != null) {
-            journal.setObjectif(objectifRepository.findOne(journal.getObjectif().getIdentifiant()));
+        if (journal.getProjet() != null) {
+            if (journal.getProjet().getIdentifiant() != null)
+                journal.setProjet(projetRepository.findOne(journal.getProjet().getIdentifiant()));
+            else if (journal.getProjet().getLibelle() != null)
+                journal.setProjet(projetRepository.findByLibelle(journal.getProjet().getLibelle())
+                        .orElseThrow(ResourceNotFoundException::new));
         }
-        if (journal.getProcessus() != null && journal.getProcessus().getIdentifiant() != null) {
-            journal.setProcessus(processusRepository.findOne(journal.getProcessus().getIdentifiant()));
+        if (journal.getObjectif() != null) {
+            if (journal.getObjectif().getIdentifiant() != null)
+                journal.setObjectif(objectifRepository.findOne(journal.getObjectif().getIdentifiant()));
+            else if (journal.getObjectif().getLibelle() != null)
+                journal.setObjectif(objectifRepository.findByLibelle(journal.getObjectif().getLibelle())
+                        .orElseThrow(ResourceNotFoundException::new));
         }
-        if (journal.getPrevision() != null && journal.getPrevision().getIdentifiant() != null) {
-            journal.setPrevision(previsionRepository.findOne(journal.getPrevision().getIdentifiant()));
+        if (journal.getProcessus() != null) {
+            if (journal.getProcessus().getIdentifiant() != null)
+                journal.setProcessus(processusRepository.findOne(journal.getProcessus().getIdentifiant()));
+            else if (journal.getProcessus().getLibelle() != null)
+                journal.setProcessus(processusRepository.findByLibelle(journal.getProcessus().getLibelle())
+                        .orElseThrow(ResourceNotFoundException::new));
+        }
+        if (journal.getPrevision() != null) {
+            if (journal.getPrevision().getIdentifiant() != null)
+                journal.setPrevision(previsionRepository.findOne(journal.getPrevision().getIdentifiant()));
+            else if (journal.getPrevision().getDescription() != null)
+                journal.setPrevision(previsionRepository.findByDescription(journal.getPrevision().getDescription())
+                        .orElseThrow(ResourceNotFoundException::new));
         }
     }
 
     @Override
-    public synchronized Journal saveAndFlush(Journal journal) throws CustomException {
+    public synchronized Journal saveAndFlush(Journal journal){
         controler(journal);
         construireJournal(journal);
         journal = super.saveAndFlush(journal);

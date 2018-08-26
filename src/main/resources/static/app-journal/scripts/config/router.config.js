@@ -35,7 +35,6 @@ angular.module('app')
                             baseControllerUri + 'journaux.controller.js'])
                     })
 
-                    // route vers la modification ou l'ajout d'un compte
                     .state('ui.journaux.edit', {
                         url: '/edit',
                         controller: 'JournauxControllerEdit',
@@ -45,11 +44,19 @@ angular.module('app')
                             label: 'Journal'
                         }
                     })
-                    // route vers la modification ou l'ajout d'un compte
                     .state('ui.journaux.import', {
                         url: '/import',
                         controller: 'JournauxControllerImport',
                         templateUrl: baseViewUri + 'journaux.import.html',
+                        ncyBreadcrumb: {
+                            parent: 'Accueil',
+                            label: 'Journal'
+                        }
+                    })
+                    .state('ui.journaux.grid', {
+                        url: '/grid',
+                        controller: 'JournauxControllerDataGrid',
+                        templateUrl: baseViewUri + 'journaux.grid.html',
                         ncyBreadcrumb: {
                             parent: 'Accueil',
                             label: 'Journal'

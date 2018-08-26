@@ -393,6 +393,19 @@ angular.module('app')
                                 $scope.loading = false;
                             });
                 };
+
+                $scope.options = {
+                    maxDate: new Date(),
+                    showWeeks: false,
+                    startingDay: 1
+                };
+
+                $scope.datePickerOpenStatus = {};
+                $scope.datePickerOpenStatus.heureDebutRealisation = false;
+
+                $scope.openCalendar = function openCalendar(date) {
+                    $scope.datePickerOpenStatus[date] = true;
+                }
             }
         ]);
 
@@ -417,5 +430,314 @@ angular.module('app')
                         uiNotif.info(error.data.message);
                     });
                 };
+            }
+        ]);
+
+angular.module('app')
+    .controller('JournauxControllerDataGrid',
+        ['$scope', 'PrevisionService', 'utils', 'uiNotif', 'CategorieService',
+            'ProjetService', 'ProcessusService', 'ObjectifService', 'JournalService',
+            'uiGridConstants',
+            function ($scope, PrevisionService, utils, uiNotif,
+                      CategorieService, ProjetService, ProcessusService, ObjectifService, JournalService,
+                      uiGridConstants) {
+
+                var gridApi;
+
+                PrevisionService.search({
+                    prevision: {description: ""},
+                    size: 9999999,
+                    page: 0
+                }).$promise.then(function (response) {
+                        $scope.previsions = response.data.content;
+                    },
+                    function (error) {
+                        uiNotif.info(error.data.message);
+                    });
+
+                ProcessusService.search({
+                    processus: {libelle: "", state: null},
+                    size: 9999999,
+                    page: 0
+                }).$promise.then(function (response) {
+                    $scope.processuss = response.data.content;
+                }, function (error) {
+                    uiNotif.info(error.data.message);
+                });
+
+                ProjetService.search({
+                    projet: {libelle: "", state: null},
+                    size: 9999999,
+                    page: 0
+                }).$promise.then(function (response) {
+                    $scope.projets = response.data.content;
+                }, function (error) {
+                    uiNotif.info(error.data.message);
+                });
+
+                CategorieService.search({
+                    categorie: {libelle: "", state: null},
+                    parent: true,
+                    size: 9999999,
+                    page: 0
+                }).$promise.then(function (response) {
+                    $scope.domaines = response.data.content;
+                }, function (error) {
+                    uiNotif.info(error.data.message);
+                });
+
+                CategorieService.search({
+                    categorie: {libelle: "", state: null},
+                    parent: false,
+                    size: 9999999,
+                    page: 0
+                }).$promise.then(function (response) {
+                    $scope.categories = response.data.content;
+                }, function (error) {
+                    uiNotif.info(error.data.message);
+                });
+
+                $scope.types = [{id: 'TACHE', value: 'TACHE'},
+                    {id: 'MEMO', value: 'MEMO'},
+                    {id: 'ACTIVITE', value: 'ACTIVITE'},
+                    {id: 'NOTE', value: 'NOTE'},
+                    {id: 'RAPPEL', value: 'RAPPEL'}];
+
+                $scope.gridOptions = {
+                    data: 'myData',
+                    enableCellEditOnFocus: true,
+                    enableColumnResizing: true,
+                    enableFiltering: true,
+                    enableGridMenu: true,
+                    showGridFooter: true,
+                    showColumnFooter: true,
+                    fastWatch: true,
+                    rowIdentity: getRowId,
+                    getRowIdentity: getRowId,
+                    importerDataAddCallback: function importerDataAddCallback(grid, newObjects) {
+                        $scope.myData = $scope.data.concat(newObjects);
+                    },
+                    columnDefs: [
+                        {name: '#', field: 'identifiant', width: 50, enableCellEdit: false},
+                        {
+                            name: 'Prévision',
+                            field: 'prevision.description',
+                            width: 150,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownIdLabel: 'description',
+                            editDropdownValueLabel: 'description',
+                            editDropdownOptionsFunction: function (rowEntity, colDef) {
+                                return $scope.previsions;
+                            }
+                        },
+                        {
+                            name: 'Date',
+                            field: 'dateRealisation',
+                            width: 150,
+                            type: 'date',
+                            enableFiltering: true,
+                            enableCellEdit: true,
+                            cellFilter: 'date:"dd/MM/yyyy"'
+                        },
+                        {
+                            name: 'Heure début',
+                            field: 'heureDebutRealisation',
+                            width: 100,
+                            enableFiltering: true,
+                            enableCellEdit: true,
+                            cellFilter: 'date:"HH:mm"',
+                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>'
+                        },
+                        {
+                            name: 'Heure fin',
+                            field: 'heureFinRealisation',
+                            width: 100,
+                            enableFiltering: true,
+                            enableCellEdit: true,
+                            cellFilter: 'date:"HH:mm"',
+                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>'
+                        },
+                        {
+                            name: 'description',
+                            width: 200,
+                            enableCellEdit: true,
+                            editableCellTemplate: '<textarea rows="50" ui-grid-editor ng-model="MODEL_COL_FIELD"></textarea>'
+                        },
+                        {
+                            name: 'domaine',
+                            field: 'domaine.libelle',
+                            width: 100,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownIdLabel: 'libelle',
+                            editDropdownValueLabel: 'libelle',
+                            editDropdownOptionsFunction: function (rowEntity, colDef) {
+                                return $scope.domaines;
+                            }
+                        },
+                        {
+                            name: 'type',
+                            field: 'typeItem',
+                            width: 100,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownOptionsArray: $scope.types
+                        },
+                        {
+                            name: 'catégorie',
+                            field: 'categorie.libelle',
+                            width: 100,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownIdLabel: 'libelle',
+                            editDropdownValueLabel: 'libelle',
+                            editDropdownOptionsFunction: function (rowEntity, colDef) {
+                                return $scope.categories;
+                            }
+                        },
+                        {
+                            name: 'projet',
+                            field: 'projet.libelle',
+                            width: 100,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownIdLabel: 'libelle',
+                            editDropdownValueLabel: 'libelle',
+                            editDropdownOptionsFunction: function (rowEntity, colDef) {
+                                return $scope.projets;
+                            }
+                        },
+                        {
+                            name: 'processus',
+                            field: 'processus.libelle',
+                            width: 150,
+                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editDropdownIdLabel: 'libelle',
+                            editDropdownValueLabel: 'libelle',
+                            editDropdownOptionsFunction: function (rowEntity, colDef) {
+                                return $scope.processuss;
+                            }
+                        },
+                        {name: 'observation', width: 150, enableCellEdit: true}
+                    ],
+                    onRegisterApi: function onRegisterApi(registeredApi) {
+                        gridApi = registeredApi;
+                        gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                            $scope.msg.lastCellEdited = 'Ligne id:' + rowEntity.identifiant + '; Colonne:' + colDef.name
+                                + '; nouvelle valeur: [' + newValue + ']; ancienne valeur: [' + oldValue + ']';
+                            $scope.$apply();
+
+                            saveJournal(rowEntity);
+                        });
+                    }
+                };
+
+                var saveJournal = function (rowEntity) {
+                    if (!rowEntity.newItem) {
+                        $scope.promise = JournalService.update(rowEntity).$promise;
+                        $scope.promise.then(function (response) {
+                            uiNotif.info(response.message);
+                        }, function (error) {
+                            uiNotif.info(error.data.message);
+                        });
+                    } else {
+                        rowEntity.identifiant = null;
+                        $scope.promise = JournalService.save(rowEntity).$promise;
+                        $scope.promise.then(function (response) {
+                            uiNotif.info(response.message);
+                            $scope.refreshData();
+                        }, function (error) {
+                            uiNotif.info(error.data.message);
+                        });
+                    }
+                };
+
+                $scope.msg = {};
+
+                function getRowId(row) {
+                    return row.identifiant;
+                }
+
+                $scope.toggleFilterRow = function () {
+                    $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
+                    gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+                };
+
+                var i = 0;
+                $scope.refreshData = function () {
+                    $scope.myData = [];
+                    $scope.getAll($scope.query.page, $scope.query.limit);
+                };
+
+                $scope.query = utils.initPagination;
+
+                $scope.getAll = function (page, limit) {
+
+                    $scope.promise = JournalService.findAll({page: page - 1, size: limit}).$promise;
+                    $scope.promise.then(function (response) {
+                            $scope.myData = [];
+                            var data = response.data.content;
+                            $scope.journaux = response.data.content;
+                            $scope.query.count = response.data.totalElements;
+
+                            data.forEach(function (row) {
+                                i++;
+                                row.dateRealisation = new Date(row.dateRealisation);
+                                row.heureDebutRealisation = new Date(row.heureDebutRealisation);
+                                row.heureFinRealisation = new Date(row.heureFinRealisation);
+                                row.newItem = false;
+                                $scope.myData.push(row);
+                            });
+                        },
+                        function (error) {
+                            uiNotif.info(error.data.message);
+                        });
+                };
+
+                $scope.getAll($scope.query.page, $scope.query.limit);
+
+                Date.prototype.addHours = function (h) {
+                    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+                    return this;
+                };
+
+                $scope.addPrevision = function () {
+                    var now = new Date();
+                    now.setSeconds(0,0);
+                    $scope.inserted = {
+                        identifiant: ($scope.myData.length !== 0) ? $scope.myData[0].identifiant + 1 : 1,
+                        dateRealisation: now,
+                        heureDebutRealisation: now,
+                        heureFinRealisation: now.addHours(1),
+                        description: null,
+                        typeItem: 'TACHE',
+                        categorie: null,
+                        projet: null,
+                        processus: null,
+                        observation: null,
+                        recommandation: null,
+                        newItem: true
+                    };
+                    $scope.myData.unshift($scope.inserted);
+                };
+
+                $scope.removePrevision = function (ev) {
+
+                    if (gridApi.selection.getSelectedGridRows().length !== 0) {
+                        var title = utils.dialogTitleRemoval;
+                        var message = 'Voulez-vous vraiement effectuer cette opération?';
+
+                        uiNotif.mdDialog(ev, title, message).then(function () {
+
+                            gridApi.selection.getSelectedGridRows().forEach(function (row) {
+                                $scope.promise = JournalService.remove({journalId: row.entity.identifiant}).$promise;
+                                $scope.promise.then(function (response) {
+                                        $scope.refreshData();
+                                    },
+                                    function (error) {
+                                        uiNotif.info(error.data.message);
+                                    });
+                            });
+                        });
+                    } else {
+                        uiNotif.info("Aucune ligne n'a été sélectionnée");
+                    }
+                }
             }
         ]);
