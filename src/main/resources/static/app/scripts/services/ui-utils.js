@@ -11,8 +11,8 @@ angular.module('app')
     	    * initialisation des données de pagination 
     	    */
 	   	   utils.initPagination =  {
-   				limit : 100,
-				limitOption : [100, 200, 300],
+   				limit : 50,
+				limitOption : [50, 150, 300],
 				page : 1,
 				order : 'Compte',
 				label : {page: 'Page:', rowsPerPage: 'Ligne par page:', of: 'sur'},

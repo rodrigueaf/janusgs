@@ -34,6 +34,16 @@
                                  md-label="{{query.label}}" md-page-select></md-table-pagination>
         </div>
     </div>
+    <div class="row" ng-show="showDescription">
+        <div class="col-md-4">
+            Description
+            <textarea cols="50" rows="5" ng-model="description"></textarea>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-success" ng-click="validerDescription()">VALIDER</a>
+            <a class="btn btn-default" ng-click="cancelDescription()">ANNULER</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <strong>Dernière cellule modifiée :</strong> {{msg.lastCellEdited}}

@@ -503,6 +503,30 @@ angular.module('app')
                     {id: 'NOTE', value: 'NOTE'},
                     {id: 'RAPPEL', value: 'RAPPEL'}];
 
+                $scope.description = '';
+                $scope.showDescription = false;
+                $scope.rowInDescriptionEditing = null;
+
+                $scope.descriptionCellClicked = function (row, col) {
+                    $scope.showDescription = true;
+                    $scope.description = row.entity.description;
+                    $scope.rowInDescriptionEditing = row.entity;
+                };
+
+                $scope.validerDescription = function () {
+                    $scope.showDescription = false;
+                    if ($scope.rowInDescriptionEditing !== null) {
+                        $scope.rowInDescriptionEditing.description = $scope.description;
+                        saveJournal($scope.rowInDescriptionEditing);
+                        $scope.rowInDescriptionEditing = null;
+                    }
+                };
+
+                $scope.cancelDescription = function () {
+                    $scope.showDescription = false;
+                    $scope.rowInDescriptionEditing = null;
+                };
+
                 $scope.gridOptions = {
                     data: 'myData',
                     enableCellEditOnFocus: true,
@@ -546,7 +570,12 @@ angular.module('app')
                             enableFiltering: true,
                             enableCellEdit: true,
                             cellFilter: 'date:"HH:mm"',
-                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>'
+                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
+                            cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                    return 'text-hidden';
+                                }
+                            }
                         },
                         {
                             name: 'Heure fin',
@@ -555,13 +584,19 @@ angular.module('app')
                             enableFiltering: true,
                             enableCellEdit: true,
                             cellFilter: 'date:"HH:mm"',
-                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>'
+                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
+                            cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                    return 'text-hidden';
+                                }
+                            }
                         },
                         {
                             name: 'description',
                             width: 200,
-                            enableCellEdit: true,
-                            editableCellTemplate: '<textarea rows="50" ui-grid-editor ng-model="MODEL_COL_FIELD"></textarea>'
+                            enableCellEdit: false,
+                            cellTemplate: '<div><div ng-click="grid.appScope.descriptionCellClicked(row,col)" class="ui-grid-cell-contents"' +
+                            ' title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>'
                         },
                         {
                             name: 'domaine',
@@ -622,8 +657,8 @@ angular.module('app')
                             $scope.msg.lastCellEdited = 'Ligne id:' + rowEntity.identifiant + '; Colonne:' + colDef.name
                                 + '; nouvelle valeur: [' + newValue + ']; ancienne valeur: [' + oldValue + ']';
                             $scope.$apply();
-
-                            saveJournal(rowEntity);
+                            if (newValue !== oldValue)
+                                saveJournal(rowEntity);
                         });
                     }
                 };
@@ -699,7 +734,7 @@ angular.module('app')
 
                 $scope.addPrevision = function () {
                     var now = new Date();
-                    now.setSeconds(0,0);
+                    now.setSeconds(0, 0);
                     $scope.inserted = {
                         identifiant: ($scope.myData.length !== 0) ? $scope.myData[0].identifiant + 1 : 1,
                         dateRealisation: now,
