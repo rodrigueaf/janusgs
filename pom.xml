@@ -6,7 +6,7 @@
 
     <groupId>com.gt.service</groupId>
     <artifactId>gt-gestionsoi-service</artifactId>
-    <version>0.2.0-RELEASE</version>
+    <version>0.2.1-RELEASE</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
