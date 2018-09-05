@@ -39,5 +39,6 @@ angular
         'ui.grid.exporter',
         'ui.grid.importer',
         'ui.grid.grouping',
-        'ui.bootstrap.datetimepicker'
+        'ui.bootstrap.datetimepicker',
+        'ui.select'
     ]);

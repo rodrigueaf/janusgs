@@ -529,6 +529,8 @@ angular.module('app')
 
                 $scope.gridOptions = {
                     data: 'myData',
+                    rowHeight: 38,
+                    enableFullRowSelection: true,
                     enableCellEditOnFocus: true,
                     enableColumnResizing: true,
                     enableFiltering: true,
@@ -570,7 +572,7 @@ angular.module('app')
                             enableFiltering: true,
                             enableCellEdit: true,
                             cellFilter: 'date:"HH:mm"',
-                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
+                            editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
                                 if (grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
@@ -584,7 +586,7 @@ angular.module('app')
                             enableFiltering: true,
                             enableCellEdit: true,
                             cellFilter: 'date:"HH:mm"',
-                            editableCellTemplate: '<input type="time" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
+                            editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
                                 if (grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
@@ -601,10 +603,10 @@ angular.module('app')
                         {
                             name: 'domaine',
                             field: 'domaine.libelle',
-                            width: 100,
-                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            width: 150,
                             editDropdownIdLabel: 'libelle',
                             editDropdownValueLabel: 'libelle',
+                            editableCellTemplate: 'uiSelectDomaine',
                             editDropdownOptionsFunction: function (rowEntity, colDef) {
                                 return $scope.domaines;
                             }
@@ -619,10 +621,10 @@ angular.module('app')
                         {
                             name: 'catégorie',
                             field: 'categorie.libelle',
-                            width: 100,
-                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            width: 150,
                             editDropdownIdLabel: 'libelle',
                             editDropdownValueLabel: 'libelle',
+                            editableCellTemplate: 'uiSelectCategorie',
                             editDropdownOptionsFunction: function (rowEntity, colDef) {
                                 return $scope.categories;
                             }
@@ -630,8 +632,8 @@ angular.module('app')
                         {
                             name: 'projet',
                             field: 'projet.libelle',
-                            width: 100,
-                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            width: 150,
+                            editableCellTemplate: 'uiSelectProjet',
                             editDropdownIdLabel: 'libelle',
                             editDropdownValueLabel: 'libelle',
                             editDropdownOptionsFunction: function (rowEntity, colDef) {
@@ -642,7 +644,7 @@ angular.module('app')
                             name: 'processus',
                             field: 'processus.libelle',
                             width: 150,
-                            editableCellTemplate: 'ui-grid/dropdownEditor',
+                            editableCellTemplate: 'uiSelectProcessus',
                             editDropdownIdLabel: 'libelle',
                             editDropdownValueLabel: 'libelle',
                             editDropdownOptionsFunction: function (rowEntity, colDef) {

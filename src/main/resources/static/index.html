@@ -42,6 +42,8 @@
     <link rel="stylesheet" href="app/styles/__app.min.css" type="text/css"/>
 
     <link rel="stylesheet" href="app/librairies/angular/jstree/dist/themes/default/style.min.css">
+    <link rel="stylesheet" href="app/librairies/angular/angular-ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="app/librairies/angular/ui-select/selectize.default.css">
     <link rel="stylesheet" href="app/librairies/angular/angular-block-ui/dist/angular-block-ui.min.css"/>
     <link rel="stylesheet"
           href="app/librairies/angular/angular-material-calendar-master/dist/angular-material-calendar.min.css">
@@ -92,6 +94,7 @@
 
 <!-- xeditable -->
 <script src="app/librairies/angular/angular-xeditable/js/xeditable.js"></script>
+<script src="app/librairies/angular/angular-ui-select/dist/select.min.js"></script>
 
 <!-- lazyload -->
 <script src="app/librairies/angular/oclazyload/dist/ocLazyLoad.min.js"></script>
@@ -125,12 +128,6 @@
 
 <script src="app/librairies/angular/ui-date-master/dist/date.js"></script>
 
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>-->
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>-->
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>-->
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/lodash.min.js"></script>-->
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/jszip.min.js"></script>-->
-<!--<script src="http://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script>-->
 <script src="app/librairies/angular/angular-ui-grid/ui-grid.min.js"></script>
 <!-- App -->
 <script src="app/scripts/app.js"></script>
@@ -159,6 +156,7 @@
 <script src="app/scripts/directives/ui-toggle.js"></script>
 <script src="app/scripts/directives/ui-selectInputSm.js"></script>
 <script src="app/scripts/directives/myCurrentTime.js"></script>
+<script src="app/scripts/directives/uiSelectWrap.js"></script>
 
 <!-- App Filtres-->
 <script src="app/scripts/filters/fromnow.js"></script>
@@ -168,6 +166,47 @@
 <script src="app/scripts/services/ui-load.js"></script>
 <script src="app/scripts/services/ui-notif.js"></script>
 <script src="app/scripts/services/ui-utils.js"></script>
+
+<script type="text/ng-template" id="uiSelectCategorie">
+    <ui-select-wrap>
+        <ui-select ng-model="MODEL_COL_FIELD" theme="selectize" ng-disabled="disabled" append-to-body="true">
+            <ui-select-match placeholder="Sélectionnez...">{{ COL_FIELD }}</ui-select-match>
+            <ui-select-choices repeat="item.libelle as item in grid.appScope.categories | filter: $select.search">
+                <span>{{ item.libelle }}</span>
+            </ui-select-choices>
+        </ui-select>
+    </ui-select-wrap>
+</script>
+<script type="text/ng-template" id="uiSelectDomaine">
+    <ui-select-wrap>
+        <ui-select ng-model="MODEL_COL_FIELD" theme="selectize" ng-disabled="disabled" append-to-body="true">
+            <ui-select-match placeholder="Sélectionnez...">{{ COL_FIELD }}</ui-select-match>
+            <ui-select-choices repeat="item.libelle as item in grid.appScope.domaines | filter: $select.search">
+                <span>{{ item.libelle }}</span>
+            </ui-select-choices>
+        </ui-select>
+    </ui-select-wrap>
+</script>
+<script type="text/ng-template" id="uiSelectProjet">
+    <ui-select-wrap>
+        <ui-select ng-model="MODEL_COL_FIELD" theme="selectize" ng-disabled="disabled" append-to-body="true">
+            <ui-select-match placeholder="Sélectionnez...">{{ COL_FIELD }}</ui-select-match>
+            <ui-select-choices repeat="item.libelle as item in grid.appScope.projets | filter: $select.search">
+                <span>{{ item.libelle }}</span>
+            </ui-select-choices>
+        </ui-select>
+    </ui-select-wrap>
+</script>
+<script type="text/ng-template" id="uiSelectProcessus">
+    <ui-select-wrap>
+        <ui-select ng-model="MODEL_COL_FIELD" theme="selectize" ng-disabled="disabled" append-to-body="true">
+            <ui-select-match placeholder="Sélectionnez...">{{ COL_FIELD }}</ui-select-match>
+            <ui-select-choices repeat="item.libelle as item in grid.appScope.processuss | filter: $select.search">
+                <span>{{ item.libelle }}</span>
+            </ui-select-choices>
+        </ui-select>
+    </ui-select-wrap>
+</script>
 
 </body>
 </html>
