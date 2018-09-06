@@ -30,8 +30,7 @@ public class Projet extends AbstractAuditingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer identifiant;
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
+    @Column(length = 500, unique = true, nullable = false)
     private String libelle;
     @Temporal(TemporalType.DATE)
     private Date dateDebut;
