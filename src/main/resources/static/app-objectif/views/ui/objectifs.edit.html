@@ -55,7 +55,6 @@
                            <span editable-text="objectif.libelle"
                                  e-id="libelle"
                                  ng-init="motif = '\\w+' "
-                                 onbeforesave="validMinMaxAndPattern($data, 1, 255, motif)"
                                  e-placeholder="Libellé"
                                  e-formclass="form-control no-borders">
                               {{ objectif.libelle || 'aucune valeur' }}
