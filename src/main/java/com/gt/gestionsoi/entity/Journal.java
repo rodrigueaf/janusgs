@@ -22,9 +22,9 @@ public class Journal extends Item {
 
     @Temporal(TemporalType.DATE)
     private Date dateRealisation;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date heureDebutRealisation;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date heureFinRealisation;
     private String recommandation;
     @ManyToOne

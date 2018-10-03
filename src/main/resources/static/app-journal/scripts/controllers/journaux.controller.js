@@ -574,7 +574,7 @@ angular.module('app')
                             cellFilter: 'date:"HH:mm"',
                             editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                if (grid.getCellValue(row, col) !== null && grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
                                 }
                             }
@@ -588,7 +588,7 @@ angular.module('app')
                             cellFilter: 'date:"HH:mm"',
                             editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                if (grid.getCellValue(row, col) !== null && grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
                                 }
                             }
@@ -716,8 +716,14 @@ angular.module('app')
                             data.forEach(function (row) {
                                 i++;
                                 row.dateRealisation = new Date(row.dateRealisation);
-                                row.heureDebutRealisation = new Date(row.heureDebutRealisation);
-                                row.heureFinRealisation = new Date(row.heureFinRealisation);
+                                if(row.heureDebutRealisation !== null){
+                                    var split = row.heureDebutRealisation.split(':');
+                                    row.heureDebutRealisation = new Date(1970, 0, 1, split[0], split[1], split[2]);
+                                }
+                                if(row.heureFinRealisation !== null){
+                                    split = row.heureFinRealisation.split(':');
+                                    row.heureFinRealisation = new Date(1970, 0, 1, split[0], split[1], split[2]);
+                                }
                                 row.newItem = false;
                                 $scope.myData.push(row);
                             });
