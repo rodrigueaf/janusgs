@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface JournalRepository extends BaseEntityRepository<Journal, Integer> {
 
-    Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
+    Page<Journal> findAllByOrderByIdentifiantAsc(Pageable p);
 
     Long countByPrevisionIdentifiant(Integer previsionId);
 

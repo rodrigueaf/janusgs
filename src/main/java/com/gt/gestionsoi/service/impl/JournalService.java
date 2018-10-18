@@ -126,8 +126,8 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     @Override
-    public Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p) {
-        return ((JournalRepository) repository).findAllByOrderByIdentifiantDesc(p);
+    public Page<Journal> findAllByOrderByIdentifiantAsc(Pageable p) {
+        return ((JournalRepository) repository).findAllByOrderByIdentifiantAsc(p);
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface IJournalService extends IBaseEntityService<Journal, Integer> {
 
-    Page<Journal> findAllByOrderByIdentifiantDesc(Pageable p);
+    Page<Journal> findAllByOrderByIdentifiantAsc(Pageable p);
 
     List<Journal> recupererLaListeVersionnee(Integer[] ints);
 

@@ -102,7 +102,7 @@ public class JournalController extends BaseEntityController<Journal, Integer> {
                 .code(null)
                 .title(DefaultMP.TITLE_SUCCESS)
                 .message(DefaultMP.MESSAGE_SUCCESS)
-                .data(((IJournalService) service).findAllByOrderByIdentifiantDesc(pageable))
+                .data(((IJournalService) service).findAllByOrderByIdentifiantAsc(pageable))
                 .buildI18n(), HttpStatus.OK);
     }
 
