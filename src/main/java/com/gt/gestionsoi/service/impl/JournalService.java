@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,7 +108,7 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     }
 
     @Override
-    public synchronized Journal saveAndFlush(Journal journal){
+    public synchronized Journal saveAndFlush(Journal journal) {
         controler(journal);
         construireJournal(journal);
         journal = super.saveAndFlush(journal);
@@ -142,13 +143,20 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
     public void importer(String[] journal) {
         String patternARespecter = "(\\d{2}/\\d{2}/\\d{4};(\\d{2}:\\d{2})?;(\\d{2}:\\d{2})?;[^;]*)+";
         for (int i = 0; i < journal.length; i++) {
-            if (!Pattern.matches(patternARespecter, journal[i])) {
+
+            if (StringUtils.countOccurrencesOf(journal[i], "\"\"") != 2
+                    && !Pattern.matches(patternARespecter, journal[i])) {
                 throw new CustomException("Le texte importé ne respecte pas le format requis à la ligne " + (i + 1));
             }
         }
         Arrays.stream(journal)
                 .map(l -> {
-                    String[] split = l.split(";");
+                    String[] split;
+                    if (StringUtils.countOccurrencesOf(l, "\"\"") == 2) {
+                        split = l.split(";", 4);
+                    } else {
+                        split = l.split(";");
+                    }
                     Journal j = new Journal();
                     try {
                         j.setDateRealisation(new SimpleDateFormat("dd/MM/yyyy").parse(split[0]));
@@ -159,7 +167,7 @@ public class JournalService extends BaseEntityService<Journal, Integer> implemen
                         if (split[2] != null && !split[2].isEmpty())
                             j.setHeureFinRealisation(new SimpleDateFormat("dd/MM/yyyy HH:mm")
                                     .parse(split[0] + " " + split[2]));
-                        j.setDescription(split[3]);
+                        j.setDescription(split[3].replace("\"\"", ""));
                         return j;
                     } catch (ParseException e) {
                         Logger.getLogger(JournalService.class.getSimpleName()).info(e.getMessage());
