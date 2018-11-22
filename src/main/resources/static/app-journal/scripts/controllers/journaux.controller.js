@@ -417,18 +417,66 @@ angular.module('app')
                       CategorieService, ProjetService, ProcessusService, ObjectifService, JournalService) {
                 $scope.journal = null;
 
-                var refactorer = function (text) {
-                    return text.split('\n');
+                String.prototype.count = function (c) {
+                    var result = 0, i = 0;
+                    for (i; i < this.length; i++) if (this[i] === c) result++;
+                    return result;
+                };
+
+                var controlerText = function (text) {
+                    var tab = text.match(/([0-9]{2}\/[0-9]{2}\/[0-9]{4};([0-9]{2}:[0-9]{2})?;([0-9]{2}:[0-9]{2})?;[^;]+)+/);
+                    if(tab !== null){
+                        for(var i = 0; i < tab.length; i++){
+                            if(tab[i] === text){
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+
+                var refactorer = function (words) {
+                    var tab = words.split('\n');
+                    var newTab = [];
+                    for (var i = 0; i < tab.length; i++) {
+                        if (tab[i].count('"') === 4) {
+                            newTab.push(tab[i]);
+                        }
+                        else if (tab[i].includes('""')) {
+                            var text = tab[i] + '\n';
+                            for (var j = i + 1; j < tab.length; j++) {
+                                if (!tab[j].includes('""')) {
+                                    text += tab[j] + '\n';
+                                } else {
+                                    text += tab[j];
+                                    i = j;
+                                    break;
+                                }
+                            }
+                            newTab.push(text);
+                        } else {
+                            if (controlerText(tab[i])) {
+                                newTab.push(tab[i]);
+                            } else {
+                                uiNotif.info("Le texte importé ne respecte pas le format requis à la ligne " + (i + 1));
+                                return null;
+                            }
+                        }
+                    }
+                    return newTab;
                 };
 
                 $scope.savePrevision = function () {
-                    $scope.promise = JournalService.import(refactorer($scope.journal)).$promise;
-                    $scope.promise.then(function (response) {
-                        uiNotif.info(response.message);
-                        $scope.journal = null;
-                    }, function (error) {
-                        uiNotif.info(error.data.message);
-                    });
+                    var result = refactorer($scope.journal);
+                    if (result !== null) {
+                        $scope.promise = JournalService.import(result).$promise;
+                        $scope.promise.then(function (response) {
+                            uiNotif.info(response.message);
+                            $scope.journal = null;
+                        }, function (error) {
+                            uiNotif.info(error.data.message);
+                        });
+                    }
                 };
             }
         ]);
@@ -574,7 +622,7 @@ angular.module('app')
                             cellFilter: 'date:"HH:mm"',
                             editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                if (grid.getCellValue(row, col) !== null && grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
                                 }
                             }
@@ -588,7 +636,7 @@ angular.module('app')
                             cellFilter: 'date:"HH:mm"',
                             editableCellTemplate: '<input type="time" style="font-size: 14px;" ui-grid-editor ng-model="MODEL_COL_FIELD"/>',
                             cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                if (grid.getCellValue(row, col).getTime() === 0) {
+                                if (grid.getCellValue(row, col) !== null && grid.getCellValue(row, col).getTime() === 0) {
                                     return 'text-hidden';
                                 }
                             }
@@ -716,8 +764,14 @@ angular.module('app')
                             data.forEach(function (row) {
                                 i++;
                                 row.dateRealisation = new Date(row.dateRealisation);
-                                row.heureDebutRealisation = new Date(row.heureDebutRealisation);
-                                row.heureFinRealisation = new Date(row.heureFinRealisation);
+                                if (row.heureDebutRealisation !== null) {
+                                    var split = row.heureDebutRealisation.split(':');
+                                    row.heureDebutRealisation = new Date(1970, 0, 1, split[0], split[1], split[2]);
+                                }
+                                if (row.heureFinRealisation !== null) {
+                                    split = row.heureFinRealisation.split(':');
+                                    row.heureFinRealisation = new Date(1970, 0, 1, split[0], split[1], split[2]);
+                                }
                                 row.newItem = false;
                                 $scope.myData.push(row);
                             });

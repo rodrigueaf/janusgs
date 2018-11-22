@@ -83,10 +83,10 @@ spring:
     datasource:
         url: jdbc:postgresql://${spring.datasource.hostname}:${spring.datasource.port}/${spring.datasource.database}
         hostname: localhost
-        port: 5432
+        port: 5434
         database: gestionsoi
         username: postgres
-        password: africa
+        password: Root2018
         driver-class-name: org.postgresql.Driver
     jpa:
         database: POSTGRESQL

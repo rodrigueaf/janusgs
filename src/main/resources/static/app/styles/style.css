@@ -6,7 +6,7 @@
 
 .grid {
     width: 100%;
-    height: 350px;
+    height: 2100px;
 }
 
 .text-hidden {
@@ -25,4 +25,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.import-textarea{
+    background: url("../images/lignenums.png") no-repeat local;
+    background-size: 32.4px;
+    padding-left: 35px;
+    padding-top: 10px;
+    border-color: #ccc;
 }

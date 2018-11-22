@@ -21,9 +21,11 @@
                         <small class="text-danger">*</small>
                         : </label>
                     <div class="col-sm-6">
-                        <textarea ng-model="journal" cols="50" rows="10"></textarea>
+                        <textarea ng-model="journal" cols="50" rows="10" class="import-textarea"></textarea>
                         <p>Veuillez respecter le motif suivant : Date;Heure_debut;Heure_fin;Description</p>
-                        <p>Example : 12/08/2018;09:10;10:30;Création d'une ligne</p>
+                        <p>Exemple : 12/08/2018;09:10;10:30;Création d'une ligne</p>
+                        <p>Exemple : 12/08/2018;09:10;10:30;""Création d'une ligne<br>ligne1<br>ligne2""</p>
+                        <p>NB: Les textes entourés de deux doubles quote (""..."") ne sont pas soumis à la vérification de l'expression régulière </p>
                     </div>
                 </div>
 
