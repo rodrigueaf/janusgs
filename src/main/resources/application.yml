@@ -85,8 +85,6 @@ spring:
         hostname: localhost
         port: 5432
         database: gestionsoi
-        username: postgres
-        password: africa
         driver-class-name: org.postgresql.Driver
     jpa:
         database: POSTGRESQL
@@ -115,9 +113,6 @@ spring:
 spring:
     profiles: prod
     datasource:
-        url: jdbc:postgresql://ec2-54-235-252-23.compute-1.amazonaws.com:5432/dedf8166mhtpc8
-        username: orhsafdbrsyljp
-        password: f951f8b3293a61b67c50eee9a1940a0d0816ad71b408a08731e74de4a8e86027
         driverClassName: org.postgresql.Driver
     jpa:
         database: POSTGRESQL
